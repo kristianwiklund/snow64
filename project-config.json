@@ -3,7 +3,8 @@
     "description": "Project borderoff",
     "toolkit": "cc65",
     "sources": [
-        "src/main.c"
+        "src/main.c",
+        "src/sprites.s"
     ],
     "build": "debug",
     "definitions": [],
