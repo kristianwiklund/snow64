@@ -36,14 +36,15 @@ unsigned char i,j,n;
 unsigned char azc;
 unsigned int aza;
 
-#define addzor(sprite, low, high, of) {\
+ #define addzor(sprite, low, high, of) {\
   aza = (unsigned int)(*low)+of;\
-  *low=(aza&0xff);\
+  *low=(unsigned char)(aza);\
   azc = (aza&0x100)>>1;\
   if (azc) {\
     *high ^= spritebit[sprite];\
   }\
  }
+
 
 #define NR_SPRITES 5
 // struct of lists, not list of structs - see https://github.com/ilmenit/CC65-Advanced-Optimizations?tab=readme-ov-file
@@ -64,34 +65,6 @@ struct sprit sprits = {
 };
 // unsigned char i,j,n;
 
-// struct sprit sprits = {
-//                         {120}, // x
-//                         0, // hix
-//                         {130}, // y
-//                         {1}, // dx
-//                         {0} // dy
-//                     };
-
-// #define _bouncesprite(sprite){\
-//   if (!(sprits.hisprites&spritebit[sprite])) {if (sprits.x[sprite] <= BORDER_LEFT) { sprits.dx[sprite]=-sprits.dx[sprite]; sprits.x[sprite]=BORDER_LEFT+1;}}\
-//   else{\
-//    if (sprits.x[sprite] >= (BORDER_RIGHT-SPRITE_WIDTH-255)) { sprits.dx[sprite]=-sprits.dx[sprite]; sprits.x[sprite]=(BORDER_RIGHT-SPRITE_WIDTH-1-255);}\
-//   }\
-//   if (sprits.y[sprite] <= BORDER_TOP){\
-//         sprits.dy[sprite]=-sprits.dy[sprite];\
-//         sprits.y[sprite]=BORDER_TOP+1;\
-//   }\
-//   else if (sprits.y[sprite] >= (BORDER_BOTTOM-SPRITE_HEIGHT)){\
-//      sprits.dy[sprite]=-sprits.dy[sprite];sprits.y[sprite]=(BORDER_BOTTOM-SPRITE_HEIGHT-1);}\
-// }
-
-// #define _movemovecheck(sprite) {\
-//       VIC.bordercolor=sprite;\
-//       addzor(sprite,&sprits.x[sprite],&sprits.hisprites,sprits.dx[sprite]);\
-//       sprits.y[sprite]+=sprits.dy[sprite];\
-//       position_sprite_m(sprite);\
-//       bouncesprite(sprite);\
-// }
 
 #define bouncesprite(sprite){\
   if (!(sprits.hisprites&spritebit[sprite])) {if (VIC.spr_pos[sprite].x <= BORDER_LEFT) { sprits.dx[sprite]=-sprits.dx[sprite]; VIC.spr_pos[sprite].x=BORDER_LEFT+1;}}\
@@ -99,7 +72,7 @@ struct sprit sprits = {
    if (VIC.spr_pos[sprite].x >= (BORDER_RIGHT-SPRITE_WIDTH-255)) { sprits.dx[sprite]=-sprits.dx[sprite]; VIC.spr_pos[sprite].x=(BORDER_RIGHT-SPRITE_WIDTH-1-255);}\
   }}
   
-
+// not interesting with the borders gone. 
 //   {
 //   if (VIC.spr_pos[sprite].y <= BORDER_TOP){\
 //         sprits.dy[sprite]=-sprits.dy[sprite];\
@@ -158,7 +131,7 @@ void my_irq(void) {
 __asm__(" jmp $ea31");
 }
       
-// used for border removal - not active now
+// used for border removal 
 void my_irq_2(void) {
     VIC.rasterline = 255;
     VIC.ctrl1&=0xf7;
