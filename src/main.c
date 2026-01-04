@@ -111,9 +111,9 @@ void my_irq(void) {
         //       sprits.dx[j]=-sprits.dx[j];
         //       sprits.dy[j]=-sprits.dy[j];
  
-        //     }
-        //   }
-        // }
+            }
+          }
+        }
 
         for (i=0;i<NR_SPRITES;i++) { 
             VIC.bordercolor=COLOR_GREEN;
