@@ -1,5 +1,7 @@
 #include <c64.h>
 #include <peekpoke.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 #define SPRITE_HEIGHT 21
 #define SPRITE_WIDTH 24
@@ -24,7 +26,7 @@ void my_irq_2(void);
     if ((xxx)&0x100) \
         VIC.spr_hi_x|=(1<<nr);\
     else\
-        VIC.spr_hi_x&=(0xff ^ (1<<nr));}
+        VIC.spr_hi_x&=(~(1<<nr));}
 
 
 
@@ -32,36 +34,77 @@ void my_irq_2(void);
 // interrupt processing. Yellow bar shows the used time
 
 signed char dx=1,dy=-3,dx2=2,dy2=1;
+signed char mycol=1;
 
 void my_irq(void) {
 
-    VIC.bordercolor=COLOR_YELLOW;
-   // VIC.rasterline = 255;
-    // VIC.ctrl1&=0xf7;
+    unsigned char irr = VIC.irr;
 
-    /* ack raster IRQ */
-    VIC.irr = 1;
-    //  POKEW(0x0314, (int)&my_irq_2);
+    
+    // // sprite-sprite interrupt
+    // if (irr&4) {
+    //         mycol++;
+    //         //         // clear interrupt
+    //          VIC.irr = 4;
+    //          // clear collisions
+    //          VIC.spr_coll=255;
+    //          dx=-dx;
+    //          dy=-dy;
+    //          dx2=-dx2;
+    //          dy2=-dy2;
 
-    sprite_x+=dx;
-    sprite_y+=dy;
-    sprite2_x+=dx2;
-    sprite2_y+=dy2;
+    // }
 
-    if (sprite_x <= BORDER_LEFT|| sprite_x >= (BORDER_RIGHT-SPRITE_WIDTH)) dx=-dx;
-    if (sprite_y <= BORDER_TOP || sprite_y  >= (BORDER_BOTTOM-SPRITE_HEIGHT)) dy=-dy;
-    if (sprite2_x <= BORDER_LEFT || sprite2_x >= (BORDER_RIGHT-SPRITE_WIDTH)) dx2=-dx2;
-    if (sprite2_y <= BORDER_TOP || sprite2_y  >= (BORDER_BOTTOM-SPRITE_HEIGHT)) dy2=-dy2;
+    // raster interrupt
+    if (irr&1) {
+        signed char tx,ty;
+        VIC.bordercolor=mycol;
+        // VIC.rasterline = 255;
+        // VIC.ctrl1&=0xf7;
+
+        /* ack raster IRQ */
+        VIC.irr = 1;
+        //  POKEW(0x0314, (int)&my_irq_2);
+
+        if (VIC.spr_coll) {
+            mycol++;
+            VIC.spr_coll=255;
+             tx=dx;
+             ty=dy;
+             dx=dx2;
+             dy=dy2;
+             dx2=tx;
+             dy2=ty;
+        }
 
 
-    // an exceptionally inefficient routine
-    position_sprite_m(0,sprite_x,sprite_y);
-    position_sprite_m(1,sprite2_x,sprite2_y);
+        sprite_x+=dx;
+        sprite_y+=dy;
+        sprite2_x+=dx2;
+        sprite2_y+=dy2;
 
-    VIC.bordercolor=COLOR_BLACK;
- 
+        if (sprite_x <= BORDER_LEFT|| sprite_x >= (BORDER_RIGHT-SPRITE_WIDTH)) dx=-dx;
+        if (sprite_y <= BORDER_TOP || sprite_y  >= (BORDER_BOTTOM-SPRITE_HEIGHT)) dy=-dy;
+        if (sprite2_x <= BORDER_LEFT || sprite2_x >= (BORDER_RIGHT-SPRITE_WIDTH)) dx2=-dx2;
+        if (sprite2_y <= BORDER_TOP || sprite2_y  >= (BORDER_BOTTOM-SPRITE_HEIGHT)) dy2=-dy2;
 
-  __asm__(" jmp $ea31");
+
+        // an exceptionally inefficient routine
+        position_sprite_m(0,sprite_x,sprite_y);
+        position_sprite_m(1,sprite2_x,sprite2_y);
+
+        // check sprite collision here as well..
+
+
+
+        VIC.bordercolor=COLOR_BLACK;
+
+        // normal interrupt processing
+        __asm__(" jmp $ea31");
+
+    }
+
+
 }
 
 // used for border removal - not active now
@@ -89,8 +132,9 @@ void __fastcall__ irq_setup(void (*irqh)(void)) {
   /* set kernal IRQ vector */
   POKEW(0x0314, (int)irqh);
 
-  /* enable raster IRQs */
+  /* enable raster and sprite IRQs */
   VIC.imr = 1;
+  VIC.spr_coll=255;
 }
 
 extern char sprite1[];
@@ -106,8 +150,7 @@ void main(void) {
 
     // two identical sprites
   POKE(2040,13);
-  POKE(2041,13);
-
+  POKE(2041,13);    
   // https://www.commodore.ca/manuals/c64_users_guide/c64-users_guide-06-sprite_graphics.pdf
 
 
@@ -115,6 +158,7 @@ for (n = 0 ; n <= 62; n++) {
  		POKE(832+n,sprite1[n]);
 
     }
+   // printf("%u\n",&VIC.spr_coll);
 
   while (PEEK(0xc6) == 0) {
     ;
