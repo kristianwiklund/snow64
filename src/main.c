@@ -13,8 +13,8 @@
 
 // https://cc65.github.io/mailarchive/2008-03/6026.html
 
-signed int sprite_x=50,sprite_y=50;
-signed int sprite2_x=150,sprite2_y=150;
+signed int sprite_y=BORDER_TOP+1,sprite_x=BORDER_LEFT+1;
+signed int sprite2_y=BORDER_BOTTOM-1-SPRITE_HEIGHT,sprite2_x=BORDER_RIGHT-1-SPRITE_WIDTH;
 
 void my_irq_2(void);
 
@@ -31,7 +31,7 @@ void my_irq_2(void);
 
 // interrupt processing. Yellow bar shows the used time
 
-signed char dx=1,dy=3,dx2=-2,dy2=1;
+signed char dx=1,dy=-3,dx2=2,dy2=1;
 
 void my_irq(void) {
 
@@ -100,8 +100,8 @@ void main(void) {
     unsigned char n;
   irq_setup(&my_irq);
   VIC.spr_ena=3;
-//   VIC.spr0_y=sprite_y;
-//   VIC.spr0_x=sprite_x;
+ //  VIC.spr0_y=sprite_y;
+ //  VIC.spr0_x=sprite_x;
 
 
     // two identical sprites
