@@ -4,7 +4,6 @@
     "toolkit": "cc65",
     "sources": [
         "src/main.c",
-        "src/sprites.s",
         "src/mysprites.spm"
     ],
     "build": "debug",

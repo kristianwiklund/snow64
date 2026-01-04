@@ -55,7 +55,7 @@ void my_irq(void) {
 
     // raster interrupt
     if (irr&1) {
-        //signed char tx,ty;
+        signed char tx,ty;
         VIC.bordercolor=mycol;
         // VIC.rasterline = 255;
         // VIC.ctrl1&=0xf7;
@@ -64,45 +64,44 @@ void my_irq(void) {
         VIC.irr = 1;
         //  POKEW(0x0314, (int)&my_irq_2);
 
-        // if (VIC.spr_coll) {
-        //     mycol++;
-        //     VIC.spr_coll=255;
-        //      tx=dx;
-        //      ty=dy;
-        //      dx=dx2;
-        //      dy=dy2;
-        //      dx2=tx;
-        //      dy2=ty;
-        // }
-
-        for (i=0;i<NR_SPRITES;i++) {
-            VIC.bordercolor=COLOR_GREEN;
-            sprits[i].x+=sprits[i].dx;
-            sprits[i].y+=sprits[i].dy;
-            VIC.bordercolor=COLOR_LIGHTBLUE;
-
-
-            if (sprits[i].x <= BORDER_LEFT || sprits[i].x >= (BORDER_RIGHT-SPRITE_WIDTH)) sprits[i].dx=-sprits[i].dx;
-            if (sprits[i].y <= BORDER_TOP || sprits[i].y >= (BORDER_BOTTOM-SPRITE_HEIGHT)) sprits[i].dy=-sprits[i].dy;
-    
-          //  position_sprite_m(i,sprits[i].x,sprits[i].y);
+        if (VIC.spr_coll) {
+            mycol++;
+            VIC.spr_coll=255;
+             tx=dx;
+             ty=dy;
+             dx=dx2;
+             dy=dy2;
+             dx2=tx;
+             dy2=ty;
         }
 
-        // sprite_x+=dx;
-        // sprite_y+=dy;
-        // sprite2_x+=dx2;
-        // sprite2_y+=dy2;
-
-        // if (sprite_x <= BORDER_LEFT|| sprite_x >= (BORDER_RIGHT-SPRITE_WIDTH)) dx=-dx;
-        // if (sprite_y <= BORDER_TOP || sprite_y  >= (BORDER_BOTTOM-SPRITE_HEIGHT)) dy=-dy;
-        // if (sprite2_x <= BORDER_LEFT || sprite2_x >= (BORDER_RIGHT-SPRITE_WIDTH)) dx2=-dx2;
-        // if (sprite2_y <= BORDER_TOP || sprite2_y  >= (BORDER_BOTTOM-SPRITE_HEIGHT)) dy2=-dy2;
+        // for (i=0;i<NR_SPRITES;i++) {
+        //     VIC.bordercolor=COLOR_GREEN;
+        //     sprits[i].x+=sprits[i].dx;
+        //     sprits[i].y+=sprits[i].dy;
+        //     VIC.bordercolor=COLOR_LIGHTBLUE;
 
 
-        // an exceptionally inefficient routine
-        // position_sprite_m(0,sprite_x,sprite_y);
-        // position_sprite_m(1,sprite2_x,sprite2_y);
+        //     if (sprits[i].x <= BORDER_LEFT || sprits[i].x >= (BORDER_RIGHT-SPRITE_WIDTH)) sprits[i].dx=-sprits[i].dx;
+        //     if (sprits[i].y <= BORDER_TOP || sprits[i].y >= (BORDER_BOTTOM-SPRITE_HEIGHT)) sprits[i].dy=-sprits[i].dy;
+    
+        //   //  position_sprite_m(i,sprits[i].x,sprits[i].y);
+        // }
 
+        sprite_x+=dx;
+        sprite_y+=dy;
+        sprite2_x+=dx2;
+        sprite2_y+=dy2;
+
+        if (sprite_x <= BORDER_LEFT|| sprite_x >= (BORDER_RIGHT-SPRITE_WIDTH)) dx=-dx;
+        if (sprite_y <= BORDER_TOP || sprite_y  >= (BORDER_BOTTOM-SPRITE_HEIGHT)) dy=-dy;
+        if (sprite2_x <= BORDER_LEFT || sprite2_x >= (BORDER_RIGHT-SPRITE_WIDTH)) dx2=-dx2;
+        if (sprite2_y <= BORDER_TOP || sprite2_y  >= (BORDER_BOTTOM-SPRITE_HEIGHT)) dy2=-dy2;
+
+
+        position_sprite_m(0,sprite_x,sprite_y);
+        position_sprite_m(1,sprite2_x,sprite2_y);
+ 
 
         VIC.bordercolor=COLOR_BLACK;
 
@@ -144,15 +143,15 @@ void __fastcall__ irq_setup(void (*irqh)(void)) {
   VIC.spr_coll=255;
 }
 
-extern char sprite1[];
+extern unsigned char mysprites[];
 char *smem=(char *)832;
 
 void main(void) {
     unsigned char n;
   irq_setup(&my_irq);
   VIC.spr_ena=3;
- //  VIC.spr0_y=sprite_y;
- //  VIC.spr0_x=sprite_x;
+  VIC.spr0_y=sprite_y;
+  VIC.spr0_x=sprite_x;
 
 
     // two identical sprites
@@ -164,8 +163,8 @@ void main(void) {
   // https://www.commodore.ca/manuals/c64_users_guide/c64-users_guide-06-sprite_graphics.pdf
 
 
-for (n = 0 ; n <= 62; n++) {
- 		POKE(832+n,sprite1[n]);
+for (n = 0 ; n < 64; n++) {
+ 		POKE(832+n,mysprites[n]);
 
     }
    // printf("%u\n",&VIC.spr_coll);
