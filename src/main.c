@@ -24,40 +24,26 @@ void my_irq_2(void);
 #define position_sprite_m(nr) {\
   VIC.spr_pos[nr].y = sprits.y[nr];\
   VIC.spr_pos[nr].x = sprits.x[nr];\
+}
 
 // lookup table to avoid shifts
 unsigned char spritebit[] = {0x1,0x2,0x4,0x8,0x10,0x20,0x40,0x80};
 unsigned char hexor[] = {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'};
-// adds "of" to a sprite position
-// pseudocode - see C implementation
 
-inline void __fastcall__  addzor(unsigned char sprite, unsigned char *low, unsigned char *high, signed char of) {  
-  unsigned int a;
-  unsigned char c;
-  unsigned char mask;
-  unsigned char ol=*low;
+unsigned char i,j,n;
 
-  // low bit
-  a = (unsigned int)(*low);
-  a+=of;
-  *low=(a&0xff);
-  c = (a&0x100)>>1;
-  // flip the high bit if the "carry" is set
-  mask = spritebit[sprite];
-  if (c) {
-    *high ^= mask;
-    // if (ol==0) {
-    //     printf("CM=%x S=%x L=%x H=%x OL=%x\n",mask,sprite,*low,*high, ol);  
-    //     //POKEW(0x0314, 0xEA31);
-    // }
-  }
+// "locals" for addition routine
+unsigned char azc;
+unsigned int aza;
 
- // POKE(1025,hexor[*low>>4]);
- // POKE(1026,hexor[*low&0xf]);
- // POKE(1024,(*high&mask)?'1':'0');
-}
-
-
+#define addzor(sprite, low, high, of) {\
+  aza = (unsigned int)(*low)+of;\
+  *low=(aza&0xff);\
+  azc = (aza&0x100)>>1;\
+  if (azc) {\
+    *high ^= spritebit[sprite];\
+  }\
+ }
 
 #define NR_SPRITES 5
 // struct of lists, not list of structs - see https://github.com/ilmenit/CC65-Advanced-Optimizations?tab=readme-ov-file
@@ -68,13 +54,14 @@ struct sprit {
     signed char dx[NR_SPRITES];
     signed char dy[NR_SPRITES];
 };
+
 struct sprit sprits = {
                         {120,100,75,180,60},
                         0,
                         {130,80,180,75,60},
                         {1,2,5,-2,1},
                         {2,-3,-1,-2,1}
-                    };
+};
 // unsigned char i,j,n;
 
 // struct sprit sprits = {
@@ -84,22 +71,62 @@ struct sprit sprits = {
 //                         {1}, // dx
 //                         {0} // dy
 //                     };
-unsigned char i,j,n;
+
+// #define _bouncesprite(sprite){\
+//   if (!(sprits.hisprites&spritebit[sprite])) {if (sprits.x[sprite] <= BORDER_LEFT) { sprits.dx[sprite]=-sprits.dx[sprite]; sprits.x[sprite]=BORDER_LEFT+1;}}\
+//   else{\
+//    if (sprits.x[sprite] >= (BORDER_RIGHT-SPRITE_WIDTH-255)) { sprits.dx[sprite]=-sprits.dx[sprite]; sprits.x[sprite]=(BORDER_RIGHT-SPRITE_WIDTH-1-255);}\
+//   }\
+//   if (sprits.y[sprite] <= BORDER_TOP){\
+//         sprits.dy[sprite]=-sprits.dy[sprite];\
+//         sprits.y[sprite]=BORDER_TOP+1;\
+//   }\
+//   else if (sprits.y[sprite] >= (BORDER_BOTTOM-SPRITE_HEIGHT)){\
+//      sprits.dy[sprite]=-sprits.dy[sprite];sprits.y[sprite]=(BORDER_BOTTOM-SPRITE_HEIGHT-1);}\
+// }
+
+// #define _movemovecheck(sprite) {\
+//       VIC.bordercolor=sprite;\
+//       addzor(sprite,&sprits.x[sprite],&sprits.hisprites,sprits.dx[sprite]);\
+//       sprits.y[sprite]+=sprits.dy[sprite];\
+//       position_sprite_m(sprite);\
+//       bouncesprite(sprite);\
+// }
+
+#define bouncesprite(sprite){\
+  if (!(sprits.hisprites&spritebit[sprite])) {if (VIC.spr_pos[sprite].x <= BORDER_LEFT) { sprits.dx[sprite]=-sprits.dx[sprite]; VIC.spr_pos[sprite].x=BORDER_LEFT+1;}}\
+  else{\
+   if (VIC.spr_pos[sprite].x >= (BORDER_RIGHT-SPRITE_WIDTH-255)) { sprits.dx[sprite]=-sprits.dx[sprite]; VIC.spr_pos[sprite].x=(BORDER_RIGHT-SPRITE_WIDTH-1-255);}\
+  }}
+  
+
+//   {
+//   if (VIC.spr_pos[sprite].y <= BORDER_TOP){\
+//         sprits.dy[sprite]=-sprits.dy[sprite];\
+//         VIC.spr_pos[sprite].y=BORDER_TOP+1;\
+//   }\
+//   else if (VIC.spr_pos[sprite].y >= (BORDER_BOTTOM-SPRITE_HEIGHT)){\
+//      sprits.dy[sprite]=-sprits.dy[sprite];VIC.spr_pos[sprite].y=(BORDER_BOTTOM-SPRITE_HEIGHT-1);}\
+// }
+
+
+#define movemovecheck(sprite) {\
+      VIC.bordercolor=sprite;\
+      addzor(sprite,&VIC.spr_pos[sprite].x,&sprits.hisprites,sprits.dx[sprite]);\
+      VIC.spr_pos[sprite].y+=sprits.dy[sprite];\
+      bouncesprite(sprite);\
+}
 
 void my_irq(void) {
 
-    unsigned char irr = VIC.irr;
-
-    // raster interrupt
-    if (irr&1) {
         //signed char tx,ty;
-        VIC.bordercolor=COLOR_YELLOW;
-        // VIC.rasterline = 255;
-        // VIC.ctrl1&=0xf7;
-
+        VIC.rasterline = 249;
+        VIC.ctrl1 |=0x08;
         /* ack raster IRQ */
         VIC.irr = 1;
-        //  POKEW(0x0314, (int)&my_irq_2);
+        VIC.bordercolor=COLOR_BLACK;
+        POKEW(0x0314, (int)&my_irq_2);
+      //__asm__(" jmp $ea31");
 
         // n = VIC.spr_coll;
         // if (n) {
@@ -110,50 +137,35 @@ void my_irq(void) {
         //     if (i&n) {
         //       sprits.dx[j]=-sprits.dx[j];
         //       sprits.dy[j]=-sprits.dy[j];
- 
-            }
-          }
-        }
 
-        for (i=0;i<NR_SPRITES;i++) { 
-            VIC.bordercolor=COLOR_GREEN;
-            // slow additions. 
-            addzor(i,sprits.x+i,&sprits.hisprites,sprits.dx[i]);
-            //sprits.x[i]+=sprits.dx[i];
-            sprits.y[i]+=sprits.dy[i];
-            VIC.bordercolor=COLOR_LIGHTBLUE;
+        //     }
+        //   }
+        // }
 
-            if (!(sprits.hisprites&spritebit[i])) {
-              if (sprits.x[i] <= BORDER_LEFT) { sprits.dx[i]=-sprits.dx[i]; sprits.x[i]=BORDER_LEFT+1;}
-            }
-            else 
-              if (sprits.x[i] >= (BORDER_RIGHT-SPRITE_WIDTH-255)) { sprits.dx[i]=-sprits.dx[i]; sprits.x[i]=(BORDER_RIGHT-SPRITE_WIDTH-1-255);}  
+        // unrolled movement loop
 
-            if (sprits.y[i] <= BORDER_TOP) { sprits.dy[i]=-sprits.dy[i]; sprits.y[i]=BORDER_TOP+1;}
-            else if (sprits.y[i] >= (BORDER_BOTTOM-SPRITE_HEIGHT)) {sprits.dy[i]=-sprits.dy[i];sprits.y[i]=(BORDER_BOTTOM-SPRITE_HEIGHT-1);}
-    
-            position_sprite_m(i);
-        }
-        VIC.spr_hi_x = sprits.hisprites;}
+      movemovecheck(0);
+      movemovecheck(1);
+      movemovecheck(2);
+      movemovecheck(3);
+      movemovecheck(4);
 
-        VIC.bordercolor=COLOR_BLACK;
+      VIC.spr_hi_x = sprits.hisprites;
+  
+  VIC.bordercolor=COLOR_BLACK;
 
-        // normal interrupt processing
-        __asm__(" jmp $ea31");
-
-    }
-
-
+  // normal interrupt processing
+__asm__(" jmp $ea31");
 }
-
+      
 // used for border removal - not active now
 void my_irq_2(void) {
-    VIC.rasterline = 249;
-  //  VIC.ctrl1 |=0x08;
+    VIC.rasterline = 255;
+    VIC.ctrl1&=0xf7;
+  VIC.bordercolor=COLOR_ORANGE;
   /* ack raster IRQ */
   VIC.irr = 1;
-   POKEW(0x0314, (int)&my_irq);
-
+  POKEW(0x0314, (int)&my_irq);
 
 
   __asm__(" jmp $ea31");
@@ -164,7 +176,7 @@ void __fastcall__ irq_setup(void (*irqh)(void)) {
   CIA1.icr = 0x7f;
   VIC.imr = 0;
 
-  VIC.rasterline = 249;
+  VIC.rasterline = 255;
   VIC.ctrl1 = 0x1b;
 
   /* set kernal IRQ vector */
@@ -179,7 +191,7 @@ extern unsigned char mysprites[];
 char *smem=(char *)832;
 
 void main(void) {
-  irq_setup(&my_irq);
+  irq_setup(&my_irq_2);
   VIC.spr_ena=0x1F;
   // VIC.spr1_y=100;
   // VIC.spr1_x=255;
