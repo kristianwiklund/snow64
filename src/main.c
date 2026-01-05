@@ -2,6 +2,7 @@
 #include <peekpoke.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <stddef.h>
 
 #define SPRITE_HEIGHT 21
 #define SPRITE_WIDTH 24
@@ -27,8 +28,9 @@ void my_irq_2(void);
 }
 
 // lookup table to avoid shifts
-unsigned char spritebit[] = {0x1,0x2,0x4,0x8,0x10,0x20,0x40,0x80};
-unsigned char hexor[] = {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'};
+const unsigned  char spritebit[] = {0x1,0x2,0x4,0x8,0x10,0x20,0x40,0x80};
+
+const unsigned  char hexor[] = {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'};
 
 unsigned char i,j,n;
 
@@ -36,16 +38,7 @@ unsigned char i,j,n;
 unsigned char azc;
 unsigned int aza;
 
- #define addzor(sprite, low, high, of) {\
-  aza = (unsigned int)(*low)+of;\
-  *low=(unsigned char)(aza);\
-  azc = (aza&0x100)>>1;\
-  if (azc) {\
-    *high ^= spritebit[sprite];\
-  }\
- }
-
-
+ 
 #define NR_SPRITES 5
 // struct of lists, not list of structs - see https://github.com/ilmenit/CC65-Advanced-Optimizations?tab=readme-ov-file
 struct sprit {
@@ -60,11 +53,12 @@ struct sprit sprits = {
                         {120,100,75,180,60},
                         0,
                         {130,80,180,75,60},
-                        {1,2,5,-2,1},
-                        {2,-3,-1,-2,1}
+                        {1,2,5,2,1},
+                        {0,-3,-1,-2,1}
 };
 // unsigned char i,j,n;
 
+struct _vic2 *V=(void *)0xD000;
 
 #define bouncesprite(sprite){\
   if (!(sprits.hisprites&spritebit[sprite])) {if (VIC.spr_pos[sprite].x <= BORDER_LEFT) { sprits.dx[sprite]=-sprits.dx[sprite]; VIC.spr_pos[sprite].x=BORDER_LEFT+1;}}\
@@ -82,11 +76,56 @@ struct sprit sprits = {
 //      sprits.dy[sprite]=-sprits.dy[sprite];VIC.spr_pos[sprite].y=(BORDER_BOTTOM-SPRITE_HEIGHT-1);}\
 // }
 
+//       addzor(sprite,&VIC.spr_pos[sprite].x,&sprits.hisprites,sprits.dx[sprite]);\
+
+#define addzor(sprite) {\
+ __asm__("clc");\
+ __asm__("lda %w",((const int)&VIC+offsetof(struct __vic2, spr_pos[sprite].x)));\
+ __asm__("ldy #%b", offsetof(struct sprit, dx[sprite]));\
+ __asm__("adc %v,y",sprits);\
+ __asm__("sta %w",((const int)&VIC+offsetof(struct __vic2, spr_pos[sprite].x)));\
+ __asm__("bcc %g",_label##sprite##);\
+ __asm__("lda %w", (const int)&VIC.spr_hi_x);\
+ __asm__("eor #%b",1<<sprite);\
+ __asm__("sta %w", (const int)&VIC.spr_hi_x);\
+_label##sprite##:\
+ __asm__("nop");\
+}
+
+    // clc                   ; $08F5 18      
+    // ldy #$02              ; $08F6 A0 02   
+    // lda $d000,Y           ; $08F8 B9 00D0 
+    // ldy #$0c              ; $08FB A0 0C   
+    // adc $0c3a,Y           ; $08FD 79 3A0C 
+    // ldy #$02              ; $0900 A0 02   
+    // sta $d000,Y           ; $0902 99 00D0 
+    // bcc label5            ; $0905 90 08           bcc $090f
+    // lda $d010             ; $0907 AD 10D0         load VIC sprite x bit 8
+    // eor #$02              ; $090A 49 02   
+    // sta $d010             ; $090C 8D 10D0         store VIC sprite x bit 8
+
+
+
+ #define baddzor(sprite) {\
+  aza = (unsigned int)(VIC.spr_pos[sprite].x)+sprits.dx[sprite];\
+  (VIC.spr_pos[sprite].x)=(unsigned char)(aza);\
+  azc = (aza&0x100)>>1;\
+  if (azc) {\
+    (VIC.spr_hi_x) ^= spritebit[sprite];\
+  }\
+ }
+
+ #define pokezor(sprite){\
+  POKE(1024,hexor[VIC.spr_hi_x&0x1]);\
+  POKE(1025,hexor[VIC.spr0_x>>4]);\
+  POKE(1026,hexor[VIC.spr0_x&0xf]);\
+ }
 
 #define movemovecheck(sprite) {\
       VIC.bordercolor=sprite;\
-      addzor(sprite,&VIC.spr_pos[sprite].x,&sprits.hisprites,sprits.dx[sprite]);\
+      addzor(sprite);\
       VIC.spr_pos[sprite].y+=sprits.dy[sprite];\
+      if (!sprite) pokezor(sprite);\
       bouncesprite(sprite);\
 }
 
@@ -97,7 +136,7 @@ void my_irq(void) {
         VIC.ctrl1 |=0x08;
         /* ack raster IRQ */
         VIC.irr = 1;
-        VIC.bordercolor=COLOR_BLACK;
+        VIC.bordercolor=COLOR_BLACK; 
         POKEW(0x0314, (int)&my_irq_2);
       //__asm__(" jmp $ea31");
 
@@ -118,12 +157,12 @@ void my_irq(void) {
         // unrolled movement loop
 
       movemovecheck(0);
-      movemovecheck(1);
-      movemovecheck(2);
-      movemovecheck(3);
-      movemovecheck(4);
+      // movemovecheck(1);
+      // movemovecheck(2);
+      // movemovecheck(3);
+      // movemovecheck(4);
 
-      VIC.spr_hi_x = sprits.hisprites;
+      //VIC.spr_hi_x = sprits.hisprites;
   
   VIC.bordercolor=COLOR_BLACK;
 
@@ -184,6 +223,11 @@ void main(void) {
   VIC.spr2_color = COLOR_WHITE;
   VIC.spr3_color = COLOR_ORANGE;
   VIC.spr4_color = COLOR_PURPLE;
+  VIC.spr_hi_x=0;
+  for(i=0;i<8;i++){
+    VIC.spr_pos[i].x=0;
+    VIC.spr_pos[i].y=0;
+  }
 
   // https://www.commodore.ca/manuals/c64_users_guide/c64-users_guide-06-sprite_graphics.pdf
 
