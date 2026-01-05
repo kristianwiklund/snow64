@@ -185,9 +185,9 @@ void my_irq(void) {
 
       movemovecheck(0);
       movemovecheck(1);
- //     movemovecheck(2);
-      // movemovecheck(3);
-      // movemovecheck(4);
+      movemovecheck(2);
+      movemovecheck(3);
+      movemovecheck(4);
 
       //VIC.spr_hi_x = sprits.hisprites;
   
