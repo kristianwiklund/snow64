@@ -152,7 +152,6 @@ _labels##sprite##:\
       VIC.bordercolor=sprite;\
       movezor(sprite);\
       VIC.spr_pos[sprite].y+=sprits.dy[sprite];\
-      if (!sprite) pokezor(sprite);\
       bouncesprite(sprite);\
 }
 
