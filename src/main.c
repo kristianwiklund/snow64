@@ -47,6 +47,7 @@ struct sprit {
     unsigned char y[NR_SPRITES];
     signed char dx[NR_SPRITES];
     signed char dy[NR_SPRITES];
+    signed char dirx[NR_SPRITES];
 };
 
 struct sprit sprits = {
@@ -54,7 +55,8 @@ struct sprit sprits = {
                         0,
                         {130,80,180,75,60},
                         {1,2,5,2,1},
-                        {0,-3,-1,-2,1}
+                        {2,-3,-1,-2,1},
+                        {0,0,0,0,0}
 };
 // unsigned char i,j,n;
 
@@ -63,9 +65,9 @@ struct _vic2 *V=(void *)0xD000;
 #define abouncesprite(sprite)
 
 #define bouncesprite(sprite){\
-  if (!(VIC.spr_hi_x&spritebit[sprite])) {if (VIC.spr_pos[sprite].x <= BORDER_LEFT) { sprits.dx[sprite]=-sprits.dx[sprite]; VIC.spr_pos[sprite].x=BORDER_LEFT+1;}}\
+  if (!(VIC.spr_hi_x&spritebit[sprite])) {if (VIC.spr_pos[sprite].x <= BORDER_LEFT) { sprits.dirx[sprite]=!sprits.dirx[sprite]; VIC.spr_pos[sprite].x=BORDER_LEFT+2;}}\
   else{\
-   if (VIC.spr_pos[sprite].x >= (BORDER_RIGHT-SPRITE_WIDTH-255)) { sprits.dx[sprite]=-sprits.dx[sprite]; VIC.spr_pos[sprite].x=(BORDER_RIGHT-SPRITE_WIDTH-1-255);}\
+   if (VIC.spr_pos[sprite].x >= (BORDER_RIGHT-SPRITE_WIDTH-255)) { sprits.dirx[sprite]=!sprits.dirx[sprite]; VIC.spr_pos[sprite].x=(BORDER_RIGHT-SPRITE_WIDTH-2-255);}\
   }}
   
 // not interesting with the borders gone. 
@@ -79,20 +81,43 @@ struct _vic2 *V=(void *)0xD000;
 // }
 
 //       addzor(sprite,&VIC.spr_pos[sprite].x,&sprits.hisprites,sprits.dx[sprite]);\
-
+// this works for positive numbers. We need a solution for negative numbers as well. 
 #define addzor(sprite) {\
  __asm__("clc");\
  __asm__("lda %w",((const int)&VIC+offsetof(struct __vic2, spr_pos[sprite].x)));\
  __asm__("ldy #%b", offsetof(struct sprit, dx[sprite]));\
  __asm__("adc %v,y",sprits);\
  __asm__("sta %w",((const int)&VIC+offsetof(struct __vic2, spr_pos[sprite].x)));\
- __asm__("bcc %g",_label##sprite##);\
+ __asm__("bcc %g",_labela##sprite##);\
  __asm__("lda %w", (const int)&VIC.spr_hi_x);\
  __asm__("eor #%b",1<<sprite);\
  __asm__("sta %w", (const int)&VIC.spr_hi_x);\
-_label##sprite##:\
+_labela##sprite##:\
  __asm__("nop");\
 }
+
+#define subzor(sprite) {\
+ __asm__("sec");\
+ __asm__("lda %w",((const int)&VIC+offsetof(struct __vic2, spr_pos[sprite].x)));\
+ __asm__("ldy #%b", offsetof(struct sprit, dx[sprite]));\
+ __asm__("sbc %v,y",sprits);\
+ __asm__("sta %w",((const int)&VIC+offsetof(struct __vic2, spr_pos[sprite].x)));\
+ __asm__("bcs %g",_labels##sprite##);\
+ __asm__("lda %w", (const int)&VIC.spr_hi_x);\
+ __asm__("eor #%b",1<<sprite);\
+ __asm__("sta %w", (const int)&VIC.spr_hi_x);\
+_labels##sprite##:\
+ __asm__("nop");\
+}
+
+#define movezor(sprite) {\
+  if(sprits.dirx[sprite])\
+    {subzor(sprite);}\
+  else\
+    {addzor(sprite);}\
+}
+
+
 
     // clc                   ; $08F5 18      
     // ldy #$02              ; $08F6 A0 02   
@@ -125,7 +150,7 @@ _label##sprite##:\
 
 #define movemovecheck(sprite) {\
       VIC.bordercolor=sprite;\
-      addzor(sprite);\
+      movezor(sprite);\
       VIC.spr_pos[sprite].y+=sprits.dy[sprite];\
       if (!sprite) pokezor(sprite);\
       bouncesprite(sprite);\
@@ -159,8 +184,8 @@ void my_irq(void) {
         // unrolled movement loop
 
       movemovecheck(0);
-      // movemovecheck(1);
-      // movemovecheck(2);
+      movemovecheck(1);
+ //     movemovecheck(2);
       // movemovecheck(3);
       // movemovecheck(4);
 
@@ -227,8 +252,8 @@ void main(void) {
   VIC.spr4_color = COLOR_PURPLE;
   VIC.spr_hi_x=0;
   for(i=0;i<8;i++){
-    VIC.spr_pos[i].x=0;
-    VIC.spr_pos[i].y=0;
+    VIC.spr_pos[i].x=sprits.x[i];
+    VIC.spr_pos[i].y=sprits.y[i];
   }
 
   // https://www.commodore.ca/manuals/c64_users_guide/c64-users_guide-06-sprite_graphics.pdf
