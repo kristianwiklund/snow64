@@ -60,8 +60,10 @@ struct sprit sprits = {
 
 struct _vic2 *V=(void *)0xD000;
 
+#define abouncesprite(sprite)
+
 #define bouncesprite(sprite){\
-  if (!(sprits.hisprites&spritebit[sprite])) {if (VIC.spr_pos[sprite].x <= BORDER_LEFT) { sprits.dx[sprite]=-sprits.dx[sprite]; VIC.spr_pos[sprite].x=BORDER_LEFT+1;}}\
+  if (!(VIC.spr_hi_x&spritebit[sprite])) {if (VIC.spr_pos[sprite].x <= BORDER_LEFT) { sprits.dx[sprite]=-sprits.dx[sprite]; VIC.spr_pos[sprite].x=BORDER_LEFT+1;}}\
   else{\
    if (VIC.spr_pos[sprite].x >= (BORDER_RIGHT-SPRITE_WIDTH-255)) { sprits.dx[sprite]=-sprits.dx[sprite]; VIC.spr_pos[sprite].x=(BORDER_RIGHT-SPRITE_WIDTH-1-255);}\
   }}
