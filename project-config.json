@@ -4,7 +4,8 @@
     "toolkit": "cc65",
     "sources": [
         "src/main.c",
-        "src/mysprites.spm"
+        "src/mysprites.spm",
+        "src/cliffs.png"
     ],
     "build": "debug",
     "definitions": [],
