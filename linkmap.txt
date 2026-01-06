@@ -17,135 +17,121 @@ myhdr.o:
     NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
     MYHDR             Offs=000000  Size=000000  Align=00001  Fill=0000
 main.o:
-    CODE              Offs=000000  Size=0003B5  Align=00001  Fill=0000
+    CODE              Offs=000000  Size=000434  Align=00001  Fill=0000
     RODATA            Offs=000000  Size=000018  Align=00001  Fill=0000
     BSS               Offs=000000  Size=000003  Align=00001  Fill=0000
-    DATA              Offs=0003EB  Size=00001C  Align=00001  Fill=0000
+    DATA              Offs=0003EB  Size=00001A  Align=00001  Fill=0000
     ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
     NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
 mysprites.o:
-    CODE              Offs=0003B5  Size=000000  Align=00001  Fill=0000
+    CODE              Offs=000434  Size=000000  Align=00001  Fill=0000
     RODATA            Offs=000018  Size=000006  Align=00001  Fill=0000
     BSS               Offs=000003  Size=000000  Align=00001  Fill=0000
-    DATA              Offs=000407  Size=000040  Align=00001  Fill=0000
-    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
-    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
-D:\c64\cc65-snapshot-win32\lib/c64.lib(addysp.o):
-    CODE              Offs=0003B5  Size=00000E  Align=00001  Fill=0000
-    RODATA            Offs=00001E  Size=000000  Align=00001  Fill=0000
-    BSS               Offs=000003  Size=000000  Align=00001  Fill=0000
-    DATA              Offs=000447  Size=000000  Align=00001  Fill=0000
-    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
-    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
-D:\c64\cc65-snapshot-win32\lib/c64.lib(and.o):
-    CODE              Offs=0003C3  Size=000010  Align=00001  Fill=0000
-    RODATA            Offs=00001E  Size=000000  Align=00001  Fill=0000
-    BSS               Offs=000003  Size=000000  Align=00001  Fill=0000
-    DATA              Offs=000447  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=000405  Size=000040  Align=00001  Fill=0000
     ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
     NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
 D:\c64\cc65-snapshot-win32\lib/c64.lib(bneg.o):
-    CODE              Offs=0003D3  Size=00000E  Align=00001  Fill=0000
+    CODE              Offs=000434  Size=00000E  Align=00001  Fill=0000
     RODATA            Offs=00001E  Size=000000  Align=00001  Fill=0000
     BSS               Offs=000003  Size=000000  Align=00001  Fill=0000
-    DATA              Offs=000447  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=000445  Size=000000  Align=00001  Fill=0000
     ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
     NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
 D:\c64\cc65-snapshot-win32\lib/c64.lib(callmain.o):
-    CODE              Offs=0003E1  Size=000017  Align=00001  Fill=0000
+    CODE              Offs=000442  Size=000017  Align=00001  Fill=0000
     RODATA            Offs=00001E  Size=000000  Align=00001  Fill=0000
     BSS               Offs=000003  Size=000000  Align=00001  Fill=0000
-    DATA              Offs=000447  Size=000004  Align=00001  Fill=0000
+    DATA              Offs=000445  Size=000004  Align=00001  Fill=0000
     ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
     NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
 D:\c64\cc65-snapshot-win32\lib/c64.lib(condes.o):
-    CODE              Offs=0003F8  Size=00000C  Align=00001  Fill=0000
+    CODE              Offs=000459  Size=00000C  Align=00001  Fill=0000
     RODATA            Offs=00001E  Size=000000  Align=00001  Fill=0000
     BSS               Offs=000003  Size=000000  Align=00001  Fill=0000
-    DATA              Offs=00044B  Size=000025  Align=00001  Fill=0000
+    DATA              Offs=000449  Size=000025  Align=00001  Fill=0000
     ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
     NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
     ONCE              Offs=000000  Size=00000C  Align=00001  Fill=0000
 D:\c64\cc65-snapshot-win32\lib/c64.lib(crt0.o):
-    CODE              Offs=000404  Size=000000  Align=00001  Fill=0000
+    CODE              Offs=000465  Size=000000  Align=00001  Fill=0000
     RODATA            Offs=00001E  Size=000000  Align=00001  Fill=0000
     BSS               Offs=000003  Size=000000  Align=00001  Fill=0000
-    DATA              Offs=000470  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=00046E  Size=000000  Align=00001  Fill=0000
     ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
     NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
     STARTUP           Offs=000000  Size=000033  Align=00001  Fill=0000
     ONCE              Offs=00000C  Size=00001A  Align=00001  Fill=0000
     INIT              Offs=000000  Size=00001C  Align=00001  Fill=0000
 D:\c64\cc65-snapshot-win32\lib/c64.lib(decsp2.o):
-    CODE              Offs=000404  Size=00000D  Align=00001  Fill=0000
+    CODE              Offs=000465  Size=00000D  Align=00001  Fill=0000
     RODATA            Offs=00001E  Size=000000  Align=00001  Fill=0000
     BSS               Offs=000003  Size=000000  Align=00001  Fill=0000
-    DATA              Offs=000470  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=00046E  Size=000000  Align=00001  Fill=0000
     ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
     NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
 D:\c64\cc65-snapshot-win32\lib/c64.lib(exehdr.o):
-    CODE              Offs=000411  Size=000000  Align=00001  Fill=0000
+    CODE              Offs=000472  Size=000000  Align=00001  Fill=0000
     RODATA            Offs=00001E  Size=000000  Align=00001  Fill=0000
     BSS               Offs=000003  Size=000000  Align=00001  Fill=0000
-    DATA              Offs=000470  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=00046E  Size=000000  Align=00001  Fill=0000
     ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
     NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
     EXEHDR            Offs=000000  Size=00000C  Align=00001  Fill=0000
 D:\c64\cc65-snapshot-win32\lib/c64.lib(incsp2.o):
-    CODE              Offs=000411  Size=000016  Align=00001  Fill=0000
+    CODE              Offs=000472  Size=000016  Align=00001  Fill=0000
     RODATA            Offs=00001E  Size=000000  Align=00001  Fill=0000
     BSS               Offs=000003  Size=000000  Align=00001  Fill=0000
-    DATA              Offs=000470  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=00046E  Size=000000  Align=00001  Fill=0000
     ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
     NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
 D:\c64\cc65-snapshot-win32\lib/c64.lib(kernal.o):
-    CODE              Offs=000427  Size=000000  Align=00001  Fill=0000
+    CODE              Offs=000488  Size=000000  Align=00001  Fill=0000
     RODATA            Offs=00001E  Size=000000  Align=00001  Fill=0000
     BSS               Offs=000003  Size=000000  Align=00001  Fill=0000
-    DATA              Offs=000470  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=00046E  Size=000000  Align=00001  Fill=0000
     ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
     NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
 D:\c64\cc65-snapshot-win32\lib/c64.lib(loadaddr.o):
-    CODE              Offs=000427  Size=000000  Align=00001  Fill=0000
+    CODE              Offs=000488  Size=000000  Align=00001  Fill=0000
     RODATA            Offs=00001E  Size=000000  Align=00001  Fill=0000
     BSS               Offs=000003  Size=000000  Align=00001  Fill=0000
-    DATA              Offs=000470  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=00046E  Size=000000  Align=00001  Fill=0000
     ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
     NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
     LOADADDR          Offs=000000  Size=000002  Align=00001  Fill=0000
 D:\c64\cc65-snapshot-win32\lib/c64.lib(memcpy.o):
-    CODE              Offs=000427  Size=00003C  Align=00001  Fill=0000
+    CODE              Offs=000488  Size=00003C  Align=00001  Fill=0000
     RODATA            Offs=00001E  Size=000000  Align=00001  Fill=0000
     BSS               Offs=000003  Size=000000  Align=00001  Fill=0000
-    DATA              Offs=000470  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=00046E  Size=000000  Align=00001  Fill=0000
     ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
     NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
 D:\c64\cc65-snapshot-win32\lib/c64.lib(popptr1.o):
-    CODE              Offs=000463  Size=00000E  Align=00001  Fill=0000
+    CODE              Offs=0004C4  Size=00000E  Align=00001  Fill=0000
     RODATA            Offs=00001E  Size=000000  Align=00001  Fill=0000
     BSS               Offs=000003  Size=000000  Align=00001  Fill=0000
-    DATA              Offs=000470  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=00046E  Size=000000  Align=00001  Fill=0000
     ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
     NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
 D:\c64\cc65-snapshot-win32\lib/c64.lib(pushax.o):
-    CODE              Offs=000471  Size=00001A  Align=00001  Fill=0000
+    CODE              Offs=0004D2  Size=00001A  Align=00001  Fill=0000
     RODATA            Offs=00001E  Size=000000  Align=00001  Fill=0000
     BSS               Offs=000003  Size=000000  Align=00001  Fill=0000
-    DATA              Offs=000470  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=00046E  Size=000000  Align=00001  Fill=0000
     ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
     NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
 D:\c64\cc65-snapshot-win32\lib/c64.lib(zerobss.o):
-    CODE              Offs=00048B  Size=000023  Align=00001  Fill=0000
+    CODE              Offs=0004EC  Size=000023  Align=00001  Fill=0000
     RODATA            Offs=00001E  Size=000000  Align=00001  Fill=0000
     BSS               Offs=000003  Size=000000  Align=00001  Fill=0000
-    DATA              Offs=000470  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=00046E  Size=000000  Align=00001  Fill=0000
     ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
     NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
 D:\c64\cc65-snapshot-win32\lib/c64.lib(zeropage.o):
-    CODE              Offs=0004AE  Size=000000  Align=00001  Fill=0000
+    CODE              Offs=00050F  Size=000000  Align=00001  Fill=0000
     RODATA            Offs=00001E  Size=000000  Align=00001  Fill=0000
     BSS               Offs=000003  Size=000000  Align=00001  Fill=0000
-    DATA              Offs=000470  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=00046E  Size=000000  Align=00001  Fill=0000
     ZEROPAGE          Offs=000000  Size=00001A  Align=00001  Fill=0000
     NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
 
@@ -160,12 +146,12 @@ ZEROPAGE              000002  00001B  00001A  00001
 LOADADDR              0007FF  000800  000002  00001
 EXEHDR                000801  00080C  00000C  00001
 STARTUP               00080D  00083F  000033  00001
-CODE                  000840  000CED  0004AE  00001
-RODATA                000CEE  000D0B  00001E  00001
-DATA                  000D0C  00117B  000470  00001
-INIT                  00117C  001197  00001C  00001
-BSS                   001198  00119A  000003  00001
-ONCE                  001198  0011BD  000026  00001
+CODE                  000840  000D4E  00050F  00001
+RODATA                000D4F  000D6C  00001E  00001
+DATA                  000D6D  0011DA  00046E  00001
+INIT                  0011DB  0011F6  00001C  00001
+BSS                   0011F7  0011F9  000003  00001
+ONCE                  0011F7  00121C  000026  00001
 BITMAP                002000  003F3F  001F40  00001
 
 
@@ -193,61 +179,60 @@ STOP                      00FFE1  LA    TALK                      00FFB4  LA
 TKSA                      00FF96  LA    UDTIM                     00FFEA  LA    
 UNLSN                     00FFAE  LA    UNTLK                     00FFAB  LA    
 UPDCRAMPTR                00EA24  LA    VECTOR                    00FF8D  LA    
-__BSS_LOAD__              001198  LA    __BSS_RUN__               001198 RLA    
+__BSS_LOAD__              0011F7  LA    __BSS_RUN__               0011F7 RLA    
 __BSS_SIZE__              000003 REA    __CONSTRUCTOR_COUNT__     000000 REA    
-__CONSTRUCTOR_TABLE__     0011BE RLA    __DESTRUCTOR_COUNT__      000000 REA    
-__DESTRUCTOR_TABLE__      000D0C RLA    __EXEHDR__                000001 REA    
+__CONSTRUCTOR_TABLE__     00121D RLA    __DESTRUCTOR_COUNT__      000000 REA    
+__DESTRUCTOR_TABLE__      000D6D RLA    __EXEHDR__                000001 REA    
 __HEADER_FILEOFFS__       000002  EA    __HEADER_LAST__           00080D RLA    
 __HEADER_SIZE__           00000D  EA    __HEADER_START__          000801  LA    
 __HIMEM__                 00D000 REA    __LOADADDR__              000001 REA    
 __MAIN_FILEOFFS__         00000E  EA    __MAIN_LAST__             003F40  LA    
 __MAIN_SIZE__             00C7F3 REA    __MAIN_START__            00080D RLA    
-__ONCE_LOAD__             001198  LA    __ONCE_RUN__              001198 RLA    
+__ONCE_LOAD__             0011F7  LA    __ONCE_RUN__              0011F7 RLA    
 __ONCE_SIZE__             000026  EA    __STACKSIZE__             000800 REA    
 __STARTUP__               000001 REA    __ZP_FILEOFFS__           000000  EA    
 __ZP_LAST__               00001C  LA    __ZP_SIZE__               00001A  EA    
-__ZP_START__              000002  LA    __argc                    001153  LA    
-__argv                    001155  LA    _cliffs_bitmap            002000  LA    
-_cliffs_colors            000D0C RLA    _exit                     000825  LA    
-_hexor                    000CF6  LA    _i                        001198  LA    
-_irq_setup                000AFB  LA    _j                        001199  LA    
-_main                     000B2C RLA    _memcpy                   000C67 RLA    
-_my_irq                   000889  LA    _my_irq_2                 000840  LA    
-_mysprites                001113 RLA    _mysprites_col_background 000D09  LA    
-_mysprites_col_multi1     000D0A  LA    _mysprites_col_multi2     000D0B  LA    
-_mysprites_size           000D06  LA    _mysprites_sprite_count   000D08  LA    
-_n                        00119A  LA    _shiftleft                000CEE  LA    
-_show_image               00085F  LA    _smem                     001111  LA    
-_sprits                   0010F7  LA    addysp                    000BF6  LA    
-addysp1                   000BF5 RLA    bnega                     000C17 RLA    
-bnegax                    000C13  LA    c_sp                      000002 RLZ    
-callmain                  000C21 RLA    condes                    001157  LA    
-decsp2                    000C44 RLA    donelib                   000C38 RLA    
-incsp2                    000C59 RLA    initlib                   001198 RLA    
-memcpy_getparams          000C90  LA    memcpy_upwards            000C6A  LA    
-popax                     000C51 RLA    popptr1                   000CA3 RLA    
+__ZP_START__              000002  LA    __argc                    0011B2  LA    
+__argv                    0011B4  LA    _cliffs_bitmap            002000  LA    
+_cliffs_colors            000D6D RLA    _exit                     000825  LA    
+_hexor                    000D57  LA    _i                        0011F7  LA    
+_irqhandler               000B67  LA    _j                        0011F8  LA    
+_main                     000C3F RLA    _memcpy                   000CC8 RLA    
+_my_irq                   00087A  LA    _my_irq_2                 000840  LA    
+_mysprites                001172 RLA    _mysprites_col_background 000D6A  LA    
+_mysprites_col_multi1     000D6B  LA    _mysprites_col_multi2     000D6C  LA    
+_mysprites_size           000D67  LA    _mysprites_sprite_count   000D69  LA    
+_n                        0011F9  LA    _setup_sprites            000A99  LA    
+_shiftleft                000D4F  LA    _show_image               00084B  LA    
+_sprits                   001158  LA    _testirq                  000B5B  LA    
+_testirq2                 000B61  LA    bnega                     000C78 RLA    
+bnegax                    000C74  LA    c_sp                      000002 RLZ    
+callmain                  000C82 RLA    condes                    0011B6  LA    
+decsp2                    000CA5 RLA    donelib                   000C99 RLA    
+incsp2                    000CBA RLA    initlib                   0011F7 RLA    
+memcpy_getparams          000CF1  LA    memcpy_upwards            000CCB  LA    
+popax                     000CB2 RLA    popptr1                   000D04 RLA    
 ptr1                      00000A RLZ    ptr2                      00000C RLZ    
 ptr3                      00000E RLZ    ptr4                      000010  LZ    
-push0                     000CB1  LA    pusha0                    000CB3 RLA    
-pushax                    000CB5 RLA    regbank                   000016  LZ    
+push0                     000D12  LA    pusha0                    000D14  LA    
+pushax                    000D16 RLA    regbank                   000016  LZ    
 regsave                   000006  LZ    sreg                      000004  LZ    
 tmp1                      000012  LZ    tmp2                      000013  LZ    
 tmp3                      000014  LZ    tmp4                      000015  LZ    
-tosanda0                  000C03 RLA    tosandax                  000C05  LA    
-zerobss                   000CCB RLA    
+zerobss                   000D2C RLA    
 
 
 Exports list by value:
 ----------------------
-__CONSTRUCTOR_COUNT__     000000 REA    __DESTRUCTOR_COUNT__      000000 REA    
-__ZP_FILEOFFS__           000000  EA    __EXEHDR__                000001 REA    
-__LOADADDR__              000001 REA    __STARTUP__               000001 REA    
-c_sp                      000002 RLZ    __HEADER_FILEOFFS__       000002  EA    
-__ZP_START__              000002  LA    __BSS_SIZE__              000003 REA    
+__DESTRUCTOR_COUNT__      000000 REA    __CONSTRUCTOR_COUNT__     000000 REA    
+__ZP_FILEOFFS__           000000  EA    __LOADADDR__              000001 REA    
+__EXEHDR__                000001 REA    __STARTUP__               000001 REA    
+__ZP_START__              000002  LA    c_sp                      000002 RLZ    
+__HEADER_FILEOFFS__       000002  EA    __BSS_SIZE__              000003 REA    
 sreg                      000004  LZ    regsave                   000006  LZ    
 ptr1                      00000A RLZ    ptr2                      00000C RLZ    
-__HEADER_SIZE__           00000D  EA    __MAIN_FILEOFFS__         00000E  EA    
-ptr3                      00000E RLZ    ptr4                      000010  LZ    
+__HEADER_SIZE__           00000D  EA    ptr3                      00000E RLZ    
+__MAIN_FILEOFFS__         00000E  EA    ptr4                      000010  LZ    
 tmp1                      000012  LZ    tmp2                      000013  LZ    
 tmp3                      000014  LZ    tmp4                      000015  LZ    
 regbank                   000016  LZ    __ZP_SIZE__               00001A  EA    
@@ -255,30 +240,29 @@ __ZP_LAST__               00001C  LA    __ONCE_SIZE__             000026  EA
 __STACKSIZE__             000800 REA    __HEADER_START__          000801  LA    
 __HEADER_LAST__           00080D RLA    __MAIN_START__            00080D RLA    
 _exit                     000825  LA    _my_irq_2                 000840  LA    
-_show_image               00085F  LA    _my_irq                   000889  LA    
-_irq_setup                000AFB  LA    _main                     000B2C RLA    
-addysp1                   000BF5 RLA    addysp                    000BF6  LA    
-tosanda0                  000C03 RLA    tosandax                  000C05  LA    
-bnegax                    000C13  LA    bnega                     000C17 RLA    
-callmain                  000C21 RLA    donelib                   000C38 RLA    
-decsp2                    000C44 RLA    popax                     000C51 RLA    
-incsp2                    000C59 RLA    _memcpy                   000C67 RLA    
-memcpy_upwards            000C6A  LA    memcpy_getparams          000C90  LA    
-popptr1                   000CA3 RLA    push0                     000CB1  LA    
-pusha0                    000CB3 RLA    pushax                    000CB5 RLA    
-zerobss                   000CCB RLA    _shiftleft                000CEE  LA    
-_hexor                    000CF6  LA    _mysprites_size           000D06  LA    
-_mysprites_sprite_count   000D08  LA    _mysprites_col_background 000D09  LA    
-_mysprites_col_multi1     000D0A  LA    _mysprites_col_multi2     000D0B  LA    
-_cliffs_colors            000D0C RLA    __DESTRUCTOR_TABLE__      000D0C RLA    
-_sprits                   0010F7  LA    _smem                     001111  LA    
-_mysprites                001113 RLA    __argc                    001153  LA    
-__argv                    001155  LA    condes                    001157  LA    
-__BSS_LOAD__              001198  LA    _i                        001198  LA    
-__BSS_RUN__               001198 RLA    __ONCE_RUN__              001198 RLA    
-__ONCE_LOAD__             001198  LA    initlib                   001198 RLA    
-_j                        001199  LA    _n                        00119A  LA    
-__CONSTRUCTOR_TABLE__     0011BE RLA    _cliffs_bitmap            002000  LA    
+_show_image               00084B  LA    _my_irq                   00087A  LA    
+_setup_sprites            000A99  LA    _testirq                  000B5B  LA    
+_testirq2                 000B61  LA    _irqhandler               000B67  LA    
+_main                     000C3F RLA    bnegax                    000C74  LA    
+bnega                     000C78 RLA    callmain                  000C82 RLA    
+donelib                   000C99 RLA    decsp2                    000CA5 RLA    
+popax                     000CB2 RLA    incsp2                    000CBA RLA    
+_memcpy                   000CC8 RLA    memcpy_upwards            000CCB  LA    
+memcpy_getparams          000CF1  LA    popptr1                   000D04 RLA    
+push0                     000D12  LA    pusha0                    000D14  LA    
+pushax                    000D16 RLA    zerobss                   000D2C RLA    
+_shiftleft                000D4F  LA    _hexor                    000D57  LA    
+_mysprites_size           000D67  LA    _mysprites_sprite_count   000D69  LA    
+_mysprites_col_background 000D6A  LA    _mysprites_col_multi1     000D6B  LA    
+_mysprites_col_multi2     000D6C  LA    __DESTRUCTOR_TABLE__      000D6D RLA    
+_cliffs_colors            000D6D RLA    _sprits                   001158  LA    
+_mysprites                001172 RLA    __argc                    0011B2  LA    
+__argv                    0011B4  LA    condes                    0011B6  LA    
+__BSS_LOAD__              0011F7  LA    initlib                   0011F7 RLA    
+__BSS_RUN__               0011F7 RLA    __ONCE_RUN__              0011F7 RLA    
+__ONCE_LOAD__             0011F7  LA    _i                        0011F7  LA    
+_j                        0011F8  LA    _n                        0011F9  LA    
+__CONSTRUCTOR_TABLE__     00121D RLA    _cliffs_bitmap            002000  LA    
 __MAIN_LAST__             003F40  LA    __MAIN_SIZE__             00C7F3 REA    
 __HIMEM__                 00D000 REA    CLRSCR                    00E544  LA    
 KBDREAD                   00E5B4  LA    UPDCRAMPTR                00EA24  LA    
@@ -392,7 +376,7 @@ __ONCE_SIZE__ ([linker generated]):
 __STACKSIZE__ ([linker generated]):
     [linker generated]        src/c64.cfg:15
 __STARTUP__ (crt0.o):
-    main.o                    d:\c64\vscode\borderoff\build\src\main.s:24
+    main.o                    d:\c64\vscode\borderoff\build\src\main.s:25
 __ZP_FILEOFFS__ ([linker generated]):
 __ZP_LAST__ ([linker generated]):
 __ZP_SIZE__ ([linker generated]):
@@ -401,16 +385,16 @@ __argc (callmain.o):
 __argv (callmain.o):
 _cliffs_bitmap (cliffs.o):
 _cliffs_colors (cliffs.o):
-    main.o                    d:\c64\vscode\borderoff\build\src\main.s:35
+    main.o                    d:\c64\vscode\borderoff\build\src\main.s:36
 _exit (crt0.o):
 _hexor (main.o):
 _i (main.o):
-_irq_setup (main.o):
+_irqhandler (main.o):
 _j (main.o):
 _main (main.o):
     callmain.o                runtime/callmain.s:11
 _memcpy (memcpy.o):
-    main.o                    d:\c64\vscode\borderoff\build\src\main.s:27
+    main.o                    d:\c64\vscode\borderoff\build\src\main.s:28
 _my_irq (main.o):
 _my_irq_2 (main.o):
 _mysprites (mysprites.o):
@@ -421,37 +405,32 @@ _mysprites_col_multi2 (mysprites.o):
 _mysprites_size (mysprites.o):
 _mysprites_sprite_count (mysprites.o):
 _n (main.o):
+_setup_sprites (main.o):
 _shiftleft (main.o):
 _show_image (main.o):
-_smem (main.o):
 _sprits (main.o):
-addysp (addysp.o):
-addysp1 (addysp.o):
-    and.o                     runtime/and.s:8
+_testirq (main.o):
+_testirq2 (main.o):
 bnega (bneg.o):
-    main.o                    d:\c64\vscode\borderoff\build\src\main.s:640
+    main.o                    d:\c64\vscode\borderoff\build\src\main.s:795
 bnegax (bneg.o):
 c_sp (zeropage.o):
-    addysp.o                  runtime/addysp.s:8
     pushax.o                  runtime/pushax.s:8
     popptr1.o                 runtime/popptr1.s:9
     memcpy.o                  common/memcpy.s:15
     incsp2.o                  runtime/incsp2.s:8
     decsp2.o                  runtime/decsp2.s:8
     crt0.o                    /home/runner/work/cc65/cc65/asminc/zeropage.inc:11
-    and.o                     runtime/and.s:9
-    main.o                    d:\c64\vscode\borderoff\build\src\main.s:10
 callmain (callmain.o):
     crt0.o                    c64/crt0.s:9
 condes (condes.o):
 decsp2 (decsp2.o):
-    main.o                    d:\c64\vscode\borderoff\build\src\main.s:640
+    main.o                    d:\c64\vscode\borderoff\build\src\main.s:795
 donelib (condes.o):
     crt0.o                    c64/crt0.s:8
 incsp2 (incsp2.o):
     popptr1.o                 runtime/popptr1.s:8
-    main.o                    d:\c64\vscode\borderoff\build\src\main.s:640
-    main.o                    d:\c64\vscode\borderoff\build\src\main.s:640
+    main.o                    d:\c64\vscode\borderoff\build\src\main.s:795
 initlib (condes.o):
     crt0.o                    c64/crt0.s:8
 memcpy_getparams (memcpy.o):
@@ -472,11 +451,9 @@ ptr3 (zeropage.o):
 ptr4 (zeropage.o):
 push0 (pushax.o):
 pusha0 (pushax.o):
-    main.o                    d:\c64\vscode\borderoff\build\src\main.s:640
 pushax (pushax.o):
     callmain.o                runtime/callmain.s:11
-    main.o                    d:\c64\vscode\borderoff\build\src\main.s:640
-    main.o                    d:\c64\vscode\borderoff\build\src\main.s:640
+    main.o                    d:\c64\vscode\borderoff\build\src\main.s:795
 regbank (zeropage.o):
 regsave (zeropage.o):
 sreg (zeropage.o):
@@ -484,9 +461,6 @@ tmp1 (zeropage.o):
 tmp2 (zeropage.o):
 tmp3 (zeropage.o):
 tmp4 (zeropage.o):
-tosanda0 (and.o):
-    main.o                    d:\c64\vscode\borderoff\build\src\main.s:640
-tosandax (and.o):
 zerobss (zerobss.o):
     crt0.o                    c64/crt0.s:9
 

@@ -6,7 +6,7 @@
 #include <string.h>
 
 #include "spritemovement.h"
-
+#include "irqhandler.h"
 
 // irqs: https://cc65.github.io/mailarchive/2008-03/6026.html
 
@@ -65,24 +65,22 @@ void show_image() {
   //printf("sb=%x, ss=%x, cb=%x, cc=%x\n", cliffs_bitmap, P_SCREEN, cliffs_colors, P_COLOR);
 
   memcpy(P_COLOR, cliffs_colors, 0x400);
-
-  VIC.ctrl1 = 0b00110000;
+  //memset(P_COLOR,0x11,0x400);
+  VIC.ctrl1 = 0b00111000;
   VIC.addr  = 0b00011000;
 
+
   // set the ghostbyte
-  POKE(0x3fff,0xAA);
+  POKE(0x3fff,0x0);
+  VIC.bgcolor0 = COLOR_GREEN;
 }
 
 void my_irq(void) {
 
-        //signed char tx,ty;
-        VIC.rasterline = 249;
-        VIC.ctrl1 |=0x08;
-        /* ack raster IRQ */
-        VIC.irr = 1;
+  //signed char tx,ty;
+  // VIC.rasterline = 249;
+  VIC.ctrl1 = 0b00011000;
 
-        POKEW(0x0314, (int)&my_irq_2);
-      //__asm__(" jmp $ea31");
 
         // n = VIC.spr_coll;
         // if (n) {
@@ -111,44 +109,20 @@ void my_irq(void) {
   
 
   // normal interrupt processing
-__asm__(" jmp $ea31");
+//__asm__(" jmp $ea31");
 }
       
 // used for border removal 
 void my_irq_2(void) {
-    VIC.rasterline = 255;
-    VIC.ctrl1&=0xf7;
-  //VIC.bordercolor=COLOR_ORANGE;
-  /* ack raster IRQ */
-  VIC.irr = 1;
-  POKEW(0x0314, (int)&my_irq);
-
-
-  __asm__(" jmp $ea31");
+  VIC.ctrl1 = 0b00010000;
+  VIC.bordercolor=COLOR_WHITE;
 }
 
-void __fastcall__ irq_setup(void (*irqh)(void)) {
-  /* disable IRQ sources, SEI not needed */
-  CIA1.icr = 0x7f;
-  VIC.imr = 0;
-
-  VIC.rasterline = 255;
-  VIC.ctrl1 = 0x2b;
-
-  /* set kernal IRQ vector */
-  POKEW(0x0314, (int)irqh);
-
-  /* enable raster and sprite IRQs */
-  VIC.imr = 1;
-  VIC.spr_coll=255;
-}
 
 extern unsigned char mysprites[];
-char *smem=(char *)832;
+#define smem 832;
 
-void main(void) {
-  irq_setup(&my_irq_2);
-  show_image();
+void setup_sprites() {
   VIC.spr_ena=0x1F;
   // VIC.spr1_y=100;
   // VIC.spr1_x=255;
@@ -161,9 +135,11 @@ void main(void) {
   POKE(2041,13);   
   POKE(2042,13);    
   POKE(2043,13);    
-  POKE(2044,13);    
+  POKE(2044,13);  
+  
+  VIC.spr_bg_prio=0x2;
 
-  VIC.bgcolor0=COLOR_ORANGE;
+  VIC.bgcolor0=COLOR_WHITE;
   VIC.bgcolor1=COLOR_ORANGE;
   VIC.bgcolor2=COLOR_BLUE;
   VIC.bgcolor3=COLOR_GREEN;
@@ -190,7 +166,53 @@ for (n = 0 ; n < 64; n++) {
     }
    // printf("%u\n",&VIC.spr_coll);
 
-  while (PEEK(0xc6) == 0) {
-    ;
-  }
+}
+void testirq() {
+  VIC.bordercolor=COLOR_BLACK;
+}
+
+void testirq2() {
+  VIC.bordercolor=COLOR_BLUE;
+}
+
+void __fastcall__ irqhandler() {  
+
+  irq_save();
+  irq_wait(48);
+  // turn on graphics mode
+  VIC.ctrl1=0b00111000;
+
+  irq_wait(245);
+  //turn off graphics mode to avoid black bar
+  VIC.ctrl1=0b00011000;
+
+  irq_wait(249);
+  my_irq_2();
+
+  irq_wait(252);
+  my_irq();
+
+  irq_set(irqhandler, 0);
+  irq_restore();
+
+}
+void main(void) {
+
+  show_image();
+  setup_sprites();
+
+
+  CIA1.icr = 0x7f;
+  VIC.imr = 0;
+  VIC.ctrl1 = 0x1b;
+  /* enable raster  IRQs */
+  // disable KERNEL and BASIC roms, keep I/O enabled
+  *((unsigned char *)1) = 0x35;
+  irq_set(irqhandler,0); 
+  VIC.imr = 1;
+
+
+  loop:
+    goto loop;
+
 }
