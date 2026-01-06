@@ -35,6 +35,7 @@ struct sprit {
     unsigned char hisprites;
     unsigned char y[NR_SPRITES]; 
     signed char dy[NR_SPRITES];
+    unsigned char anim[NR_SPRITES];
 };
 
 struct sprit sprits = {
@@ -43,7 +44,8 @@ struct sprit sprits = {
                         {120,100,75,180,60,50,200,150},
                         0,
                         {130,80,180,75,60,50,60,70},
-                        {2,3,1,2,1,1,1,2}
+                        {2,3,1,2,1,1,1,2},
+                        {0,1,2,0,1,2,0,1}
 };
   
 // set up bitmap
@@ -123,7 +125,7 @@ void my_irq_2(void) {
 }
 
 
-extern unsigned char mysprites[];
+extern unsigned char snowflake[];
 #define smem 832;
 
 void setup_sprites() {
@@ -136,7 +138,7 @@ void setup_sprites() {
   // sprits.hisprites=0x04;
 
   for (i=0;i<8;i++) {
-    *(unsigned char *)(2040+i) = 13;
+    *(unsigned char *)(2040+i) = 13+sprits.anim[i];
     VIC.spr_color[i] = COLOR_WHITE;
   } 
   VIC.spr_hi_x=0;
@@ -148,8 +150,8 @@ void setup_sprites() {
   // https://www.commodore.ca/manuals/c64_users_guide/c64-users_guide-06-sprite_graphics.pdf
 
 
-for (n = 0 ; n < 64; n++) {
- 		POKE(832+n,mysprites[n]);
+for (n = 0 ; n < 64+64+64; n++) {
+ 		POKE(832+n,snowflake[n]);
 
     }
    // printf("%u\n",&VIC.spr_coll);

@@ -4,7 +4,7 @@
     "toolkit": "cc65",
     "sources": [
         "src/main.c",
-        "src/mysprites.spm",
+        "src/snowflake.spm",
         "src/snowy.s"
     ],
     "build": "debug",
