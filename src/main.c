@@ -4,41 +4,27 @@
 #include <stdio.h>
 #include <stddef.h>
 
-#define SPRITE_HEIGHT 21
-#define SPRITE_WIDTH 24
-#define SCREEN_WIDTH 320
-#define SCREEN_HEIGHT 200
+#include "spritemovement.h"
 
-#define BORDER_LEFT 24
-#define BORDER_RIGHT (SCREEN_WIDTH+BORDER_LEFT)
-#define BORDER_TOP 51
-#define BORDER_BOTTOM (SCREEN_HEIGHT+BORDER_TOP)
 
-// https://cc65.github.io/mailarchive/2008-03/6026.html
+// irqs: https://cc65.github.io/mailarchive/2008-03/6026.html
 
-signed int sprite_y=BORDER_TOP+1,sprite_x=BORDER_LEFT+1;
-signed int sprite2_y=BORDER_BOTTOM-1-SPRITE_HEIGHT,sprite2_x=BORDER_RIGHT-1-SPRITE_WIDTH;
 
 void my_irq_2(void);
 
-// macro defined place sprite on screen. Uses about half a raster line. Avoids the function call overhead. 
-#define position_sprite_m(nr) {\
-  VIC.spr_pos[nr].y = sprits.y[nr];\
-  VIC.spr_pos[nr].x = sprits.x[nr];\
-}
 
-// lookup table to avoid shifts
-const unsigned  char spritebit[] = {0x1,0x2,0x4,0x8,0x10,0x20,0x40,0x80};
 
+// displays a hex number ("num") at the top left of the screen
 const unsigned  char hexor[] = {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'};
 
+ #define pokezor(num){\
+  POKE(1024,hexor[num>>4]);\
+  POKE(1025,hexor[num&0xf]);\
+ }
+
+ // iterators
 unsigned char i,j,n;
 
-// "locals" for addition routine
-unsigned char azc;
-unsigned int aza;
-
- 
 #define NR_SPRITES 5
 // struct of lists, not list of structs - see https://github.com/ilmenit/CC65-Advanced-Optimizations?tab=readme-ov-file
 struct sprit {
@@ -60,100 +46,7 @@ struct sprit sprits = {
 };
 // unsigned char i,j,n;
 
-struct _vic2 *V=(void *)0xD000;
 
-#define abouncesprite(sprite)
-
-#define bouncesprite(sprite){\
-  if (!(VIC.spr_hi_x&spritebit[sprite])) {if (VIC.spr_pos[sprite].x <= BORDER_LEFT) { sprits.dirx[sprite]=!sprits.dirx[sprite]; VIC.spr_pos[sprite].x=BORDER_LEFT+2;}}\
-  else{\
-   if (VIC.spr_pos[sprite].x >= (BORDER_RIGHT-SPRITE_WIDTH-255)) { sprits.dirx[sprite]=!sprits.dirx[sprite]; VIC.spr_pos[sprite].x=(BORDER_RIGHT-SPRITE_WIDTH-2-255);}\
-  }}
-  
-// not interesting with the borders gone. 
-//   {
-//   if (VIC.spr_pos[sprite].y <= BORDER_TOP){\
-//         sprits.dy[sprite]=-sprits.dy[sprite];\
-//         VIC.spr_pos[sprite].y=BORDER_TOP+1;\
-//   }\
-//   else if (VIC.spr_pos[sprite].y >= (BORDER_BOTTOM-SPRITE_HEIGHT)){\
-//      sprits.dy[sprite]=-sprits.dy[sprite];VIC.spr_pos[sprite].y=(BORDER_BOTTOM-SPRITE_HEIGHT-1);}\
-// }
-
-//       addzor(sprite,&VIC.spr_pos[sprite].x,&sprits.hisprites,sprits.dx[sprite]);\
-// this works for positive numbers. We need a solution for negative numbers as well. 
-#define addzor(sprite) {\
- __asm__("clc");\
- __asm__("lda %w",((const int)&VIC+offsetof(struct __vic2, spr_pos[sprite].x)));\
- __asm__("ldy #%b", offsetof(struct sprit, dx[sprite]));\
- __asm__("adc %v,y",sprits);\
- __asm__("sta %w",((const int)&VIC+offsetof(struct __vic2, spr_pos[sprite].x)));\
- __asm__("bcc %g",_labela##sprite##);\
- __asm__("lda %w", (const int)&VIC.spr_hi_x);\
- __asm__("eor #%b",1<<sprite);\
- __asm__("sta %w", (const int)&VIC.spr_hi_x);\
-_labela##sprite##:\
- __asm__("nop");\
-}
-
-#define subzor(sprite) {\
- __asm__("sec");\
- __asm__("lda %w",((const int)&VIC+offsetof(struct __vic2, spr_pos[sprite].x)));\
- __asm__("ldy #%b", offsetof(struct sprit, dx[sprite]));\
- __asm__("sbc %v,y",sprits);\
- __asm__("sta %w",((const int)&VIC+offsetof(struct __vic2, spr_pos[sprite].x)));\
- __asm__("bcs %g",_labels##sprite##);\
- __asm__("lda %w", (const int)&VIC.spr_hi_x);\
- __asm__("eor #%b",1<<sprite);\
- __asm__("sta %w", (const int)&VIC.spr_hi_x);\
-_labels##sprite##:\
- __asm__("nop");\
-}
-
-#define movezor(sprite) {\
-  if(sprits.dirx[sprite])\
-    {subzor(sprite);}\
-  else\
-    {addzor(sprite);}\
-}
-
-
-
-    // clc                   ; $08F5 18      
-    // ldy #$02              ; $08F6 A0 02   
-    // lda $d000,Y           ; $08F8 B9 00D0 
-    // ldy #$0c              ; $08FB A0 0C   
-    // adc $0c3a,Y           ; $08FD 79 3A0C 
-    // ldy #$02              ; $0900 A0 02   
-    // sta $d000,Y           ; $0902 99 00D0 
-    // bcc label5            ; $0905 90 08           bcc $090f
-    // lda $d010             ; $0907 AD 10D0         load VIC sprite x bit 8
-    // eor #$02              ; $090A 49 02   
-    // sta $d010             ; $090C 8D 10D0         store VIC sprite x bit 8
-
-
-
- #define baddzor(sprite) {\
-  aza = (unsigned int)(VIC.spr_pos[sprite].x)+sprits.dx[sprite];\
-  (VIC.spr_pos[sprite].x)=(unsigned char)(aza);\
-  azc = (aza&0x100)>>1;\
-  if (azc) {\
-    (VIC.spr_hi_x) ^= spritebit[sprite];\
-  }\
- }
-
- #define pokezor(sprite){\
-  POKE(1024,hexor[VIC.spr_hi_x&0x1]);\
-  POKE(1025,hexor[VIC.spr0_x>>4]);\
-  POKE(1026,hexor[VIC.spr0_x&0xf]);\
- }
-
-#define movemovecheck(sprite) {\
-      VIC.bordercolor=sprite;\
-      movezor(sprite);\
-      VIC.spr_pos[sprite].y+=sprits.dy[sprite];\
-      bouncesprite(sprite);\
-}
 
 void my_irq(void) {
 
