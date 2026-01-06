@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stddef.h>
+#include <string.h>
 
 #include "spritemovement.h"
 
@@ -44,18 +45,32 @@ struct sprit sprits = {
                         {2,-3,-1,-2,1},
                         {0,0,0,0,0}
 };
-
+  
 // set up bitmap
 
-void show_image(unsigned char *img) {
+extern unsigned char cliffs_bitmap[];
+extern unsigned char cliffs_colors[];
+extern unsigned char *_BITMAP_LOAD__,*_BITMAP_RUN__,*_COLORS_LOAD__,*_COLORS_RUN__;
+extern unsigned int _BITMAP_SIZE__, _COLORS_SIZE__;
+
+
+
+void show_image() {   
+  unsigned int i;
   // https://www.c64-wiki.com/wiki/Standard_Bitmap_Mode
 
-  VIC.ctrl1&=~0x20;
-  VIC.ctrl1|=0x10;
-  VIC.ctrl2&=~0x80;
-  
-  
+  #define P_SCREEN ((unsigned char *)0x2000)
+  #define P_COLOR  ((unsigned char *)0x0400)
 
+  //printf("sb=%x, ss=%x, cb=%x, cc=%x\n", cliffs_bitmap, P_SCREEN, cliffs_colors, P_COLOR);
+
+  memcpy(P_COLOR, cliffs_colors, 0x400);
+
+  VIC.ctrl1 = 0b00110000;
+  VIC.addr  = 0b00011000;
+
+  // set the ghostbyte
+  POKE(0x3fff,0xAA);
 }
 
 void my_irq(void) {
@@ -65,7 +80,7 @@ void my_irq(void) {
         VIC.ctrl1 |=0x08;
         /* ack raster IRQ */
         VIC.irr = 1;
-        VIC.bordercolor=COLOR_BLACK; 
+
         POKEW(0x0314, (int)&my_irq_2);
       //__asm__(" jmp $ea31");
 
@@ -85,15 +100,15 @@ void my_irq(void) {
 
         // unrolled movement loop
 
+// here be known preprocessor warnings about pasting
       movemovecheck(0);
       movemovecheck(1);
       movemovecheck(2);
       movemovecheck(3);
       movemovecheck(4);
-
+// end preprocessor warnings
       //VIC.spr_hi_x = sprits.hisprites;
   
-  VIC.bordercolor=COLOR_BLACK;
 
   // normal interrupt processing
 __asm__(" jmp $ea31");
@@ -103,7 +118,7 @@ __asm__(" jmp $ea31");
 void my_irq_2(void) {
     VIC.rasterline = 255;
     VIC.ctrl1&=0xf7;
-  VIC.bordercolor=COLOR_ORANGE;
+  //VIC.bordercolor=COLOR_ORANGE;
   /* ack raster IRQ */
   VIC.irr = 1;
   POKEW(0x0314, (int)&my_irq);
@@ -118,7 +133,7 @@ void __fastcall__ irq_setup(void (*irqh)(void)) {
   VIC.imr = 0;
 
   VIC.rasterline = 255;
-  VIC.ctrl1 = 0x1b;
+  VIC.ctrl1 = 0x2b;
 
   /* set kernal IRQ vector */
   POKEW(0x0314, (int)irqh);
@@ -133,6 +148,7 @@ char *smem=(char *)832;
 
 void main(void) {
   irq_setup(&my_irq_2);
+  show_image();
   VIC.spr_ena=0x1F;
   // VIC.spr1_y=100;
   // VIC.spr1_x=255;
@@ -147,9 +163,16 @@ void main(void) {
   POKE(2043,13);    
   POKE(2044,13);    
 
+  VIC.bgcolor0=COLOR_ORANGE;
+  VIC.bgcolor1=COLOR_ORANGE;
+  VIC.bgcolor2=COLOR_BLUE;
+  VIC.bgcolor3=COLOR_GREEN;
+  VIC.bordercolor=COLOR_GREEN;
+
+
   VIC.spr0_color = COLOR_CYAN;
   VIC.spr1_color = COLOR_YELLOW;
-  VIC.spr2_color = COLOR_WHITE;
+  VIC.spr2_color = COLOR_BLACK;
   VIC.spr3_color = COLOR_ORANGE;
   VIC.spr4_color = COLOR_PURPLE;
   VIC.spr_hi_x=0;

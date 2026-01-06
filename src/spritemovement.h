@@ -80,7 +80,6 @@ _labels##sprite##:\
 
 // does the actual move of the sprites
 #define movemovecheck(sprite) {\
-      VIC.bordercolor=sprite;\
       movezor(sprite);\
       VIC.spr_pos[sprite].y+=sprits.dy[sprite];\
       bouncesprite(sprite);\

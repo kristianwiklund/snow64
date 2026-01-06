@@ -5,7 +5,8 @@
     "sources": [
         "src/main.c",
         "src/mysprites.spm",
-        "src/cliffs.png"
+        "src/cliffs.s",
+        "src/myhdr.s"
     ],
     "build": "debug",
     "definitions": [],
@@ -13,5 +14,5 @@
     "args": [],
     "compiler": "",
     "compilerFlags": ["-Osir"],
-    "linkerFlags": ["--config", "src/c64.cfg"]
+    "linkerFlags": ["--config", "src/c64.cfg","-m","linkmap.txt","-vm"]
 }
