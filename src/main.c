@@ -26,24 +26,24 @@ const unsigned  char hexor[] = {'0','1','2','3','4','5','6','7','8','9','a','b',
  // iterators
 unsigned char i,j,n;
 
-#define NR_SPRITES 5
+#define NR_SPRITES 8
 // struct of lists, not list of structs - see https://github.com/ilmenit/CC65-Advanced-Optimizations?tab=readme-ov-file
 struct sprit {
+    unsigned char dirx[NR_SPRITES];
+    signed char dx[NR_SPRITES];
     unsigned char x[NR_SPRITES];
     unsigned char hisprites;
-    unsigned char y[NR_SPRITES];
-    signed char dx[NR_SPRITES];
+    unsigned char y[NR_SPRITES]; 
     signed char dy[NR_SPRITES];
-    signed char dirx[NR_SPRITES];
 };
 
 struct sprit sprits = {
-                        {120,100,75,180,60},
+                        {0,0,0,0,0,0,0,0},
+                        {1,2,1,2,1,2,1,1},  
+                        {120,100,75,180,60,50,200,150},
                         0,
-                        {130,80,180,75,60},
-                        {1,2,5,2,1},
-                        {2,-3,-1,-2,1},
-                        {0,0,0,0,0}
+                        {130,80,180,75,60,50,60,70},
+                        {2,3,1,2,1,1,1,2}
 };
   
 // set up bitmap
@@ -105,6 +105,10 @@ void my_irq(void) {
       movemovecheck(2);
       movemovecheck(3);
       movemovecheck(4);
+      movemovecheck(5);
+      movemovecheck(6);
+      movemovecheck(7);
+
 // end preprocessor warnings
       //VIC.spr_hi_x = sprits.hisprites;
   
@@ -123,6 +127,7 @@ extern unsigned char mysprites[];
 #define smem 832;
 
 void setup_sprites() {
+
   VIC.spr_ena=0x1F;
   // VIC.spr1_y=100;
   // VIC.spr1_x=255;
@@ -130,23 +135,10 @@ void setup_sprites() {
   // VIC.spr2_x=0;
   // sprits.hisprites=0x04;
 
-    // three identical sprites
-  POKE(2040,13);
-  POKE(2041,13);   
-  POKE(2042,13);    
-  POKE(2043,13);    
-  POKE(2044,13);  
-  
-  VIC.spr_bg_prio=0x2;
-
-
-
-
-  VIC.spr0_color = COLOR_CYAN;
-  VIC.spr1_color = COLOR_YELLOW;
-  VIC.spr2_color = COLOR_BLACK;
-  VIC.spr3_color = COLOR_ORANGE;
-  VIC.spr4_color = COLOR_PURPLE;
+  for (i=0;i<8;i++) {
+    *(unsigned char *)(2040+i) = 13;
+    VIC.spr_color[i] = COLOR_WHITE;
+  } 
   VIC.spr_hi_x=0;
   for(i=0;i<8;i++){
     VIC.spr_pos[i].x=sprits.x[i];
@@ -174,13 +166,20 @@ void testirq2() {
 void __fastcall__ irqhandler() {  
 
   irq_save();
+  // set ghostbyte to transparent and put sprites in top of graphics. 
+  POKE(0x3FFF,0x0);
+  VIC.spr_bg_prio=0x0;
+
+
   // irq_wait(48);
   // // turn on graphics mode
   // VIC.ctrl1=0b00111000;
 
-  // irq_wait(247);
-  // //turn off graphics mode to avoid black bar
-  // VIC.ctrl1=0b00011000;
+  irq_wait(247);
+  // set ghostbyte to solid black and put sprites behind graphics
+  POKE(0x3fff,0xff);
+  VIC.spr_bg_prio=0xFF;
+
 
   irq_wait(249);
   my_irq_2();

@@ -50,7 +50,7 @@ const unsigned  char shiftleft[] = {0x1,0x2,0x4,0x8,0x10,0x20,0x40,0x80};
  __asm__("sta %w",((const int)&VIC+offsetof(struct __vic2, spr_pos[sprite].x)));\
  __asm__("bcc %g",_labela##sprite##);\
  __asm__("lda %w", (const int)&VIC.spr_hi_x);\
- __asm__("eor #%b",1<<sprite);\
+ __asm__("eor #%b",(unsigned char)(1<<sprite));\
  __asm__("sta %w", (const int)&VIC.spr_hi_x);\
 _labela##sprite##:\
  __asm__("nop");\
@@ -64,7 +64,7 @@ _labela##sprite##:\
  __asm__("sta %w",((const int)&VIC+offsetof(struct __vic2, spr_pos[sprite].x)));\
  __asm__("bcs %g",_labels##sprite##);\
  __asm__("lda %w", (const int)&VIC.spr_hi_x);\
- __asm__("eor #%b",1<<sprite);\
+ __asm__("eor #%b",(unsigned char)(1<<sprite));\
  __asm__("sta %w", (const int)&VIC.spr_hi_x);\
 _labels##sprite##:\
  __asm__("nop");\
