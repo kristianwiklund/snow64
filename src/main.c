@@ -44,9 +44,19 @@ struct sprit sprits = {
                         {2,-3,-1,-2,1},
                         {0,0,0,0,0}
 };
-// unsigned char i,j,n;
 
+// set up bitmap
 
+void show_image(unsigned char *img) {
+  // https://www.c64-wiki.com/wiki/Standard_Bitmap_Mode
+
+  VIC.ctrl1&=~0x20;
+  VIC.ctrl1|=0x10;
+  VIC.ctrl2&=~0x80;
+  
+  
+
+}
 
 void my_irq(void) {
 

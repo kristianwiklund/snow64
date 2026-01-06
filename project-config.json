@@ -11,5 +11,7 @@
     "definitions": [],
     "includes": [],
     "args": [],
-    "compiler": ""
+    "compiler": "",
+    "compilerFlags": ["-Osir"],
+    "linkerFlags": ["--config", "src/c64.cfg"]
 }
