@@ -72,14 +72,15 @@ void show_image() {
 
   // set the ghostbyte
   POKE(0x3fff,0x0);
-  VIC.bgcolor0 = COLOR_GREEN;
+  VIC.bgcolor0 = COLOR_BLACK;
+  VIC.bordercolor = COLOR_BLACK;
 }
 
 void my_irq(void) {
 
   //signed char tx,ty;
   // VIC.rasterline = 249;
-  VIC.ctrl1 = 0b00011000;
+  VIC.ctrl1 = 0b00111000;
 
 
         // n = VIC.spr_coll;
@@ -114,8 +115,7 @@ void my_irq(void) {
       
 // used for border removal 
 void my_irq_2(void) {
-  VIC.ctrl1 = 0b00010000;
-  VIC.bordercolor=COLOR_WHITE;
+  VIC.ctrl1 = 0b00110000;
 }
 
 
@@ -139,11 +139,7 @@ void setup_sprites() {
   
   VIC.spr_bg_prio=0x2;
 
-  VIC.bgcolor0=COLOR_WHITE;
-  VIC.bgcolor1=COLOR_ORANGE;
-  VIC.bgcolor2=COLOR_BLUE;
-  VIC.bgcolor3=COLOR_GREEN;
-  VIC.bordercolor=COLOR_GREEN;
+
 
 
   VIC.spr0_color = COLOR_CYAN;
@@ -178,13 +174,13 @@ void testirq2() {
 void __fastcall__ irqhandler() {  
 
   irq_save();
-  irq_wait(48);
-  // turn on graphics mode
-  VIC.ctrl1=0b00111000;
+  // irq_wait(48);
+  // // turn on graphics mode
+  // VIC.ctrl1=0b00111000;
 
-  irq_wait(245);
-  //turn off graphics mode to avoid black bar
-  VIC.ctrl1=0b00011000;
+  // irq_wait(247);
+  // //turn off graphics mode to avoid black bar
+  // VIC.ctrl1=0b00011000;
 
   irq_wait(249);
   my_irq_2();

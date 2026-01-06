@@ -5,8 +5,7 @@
     "sources": [
         "src/main.c",
         "src/mysprites.spm",
-        "src/cliffs.s",
-        "src/myhdr.s"
+        "src/snowy.s"
     ],
     "build": "debug",
     "definitions": [],
