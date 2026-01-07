@@ -58,7 +58,6 @@ extern unsigned int _BITMAP_SIZE__, _COLORS_SIZE__;
 
 
 void show_image() {   
-  unsigned int i;
   // https://www.c64-wiki.com/wiki/Standard_Bitmap_Mode
 
   #define P_SCREEN ((unsigned char *)0x2000)
@@ -83,6 +82,8 @@ void my_irq(void) {
   //signed char tx,ty;
   // VIC.rasterline = 249;
   VIC.ctrl1 = 0b00111000;
+
+
 
 
         // n = VIC.spr_coll;
@@ -112,16 +113,14 @@ void my_irq(void) {
       movemovecheck(7);
 
 // end preprocessor warnings
-      //VIC.spr_hi_x = sprits.hisprites;
-  
 
-  // normal interrupt processing
-//__asm__(" jmp $ea31");
+
 }
       
 // used for border removal 
 void my_irq_2(void) {
   VIC.ctrl1 = 0b00110000;
+
 }
 
 
@@ -165,13 +164,30 @@ void testirq2() {
   VIC.bordercolor=COLOR_BLUE;
 }
 
+void ptloop();
+
+void  *pt=(void *)ptloop;
+
+// completely b0rks if optimizer is running
+#pragma optimize (push,off)
+void ptrunner() { 
+  __asm__("jmp (%v)",pt);
+}
+
+void ptloop() {
+  pt_wait(bordercolor,pt,2*50);
+  VIC.bordercolor=COLOR_ORANGE;
+}
+#pragma optimize (pop)
+
 void __fastcall__ irqhandler() {  
 
   irq_save();
+
   // set ghostbyte to transparent and put sprites in top of graphics. 
   POKE(0x3FFF,0x0);
   VIC.spr_bg_prio=0x0;
-
+  ptrunner();
 
   // irq_wait(48);
   // // turn on graphics mode

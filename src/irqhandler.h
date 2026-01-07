@@ -55,4 +55,23 @@ iwnext##tralla##:\
 	__asm__("pla");\
 	__asm__("rti")
 
+// pt_wait (see slides from trident / fjälldata 2025)
+
+
+#define pt_wait(name,pt,delay)\
+    __asm__("lda #<%g",ptagain##name##);\
+    __asm__("sta %v",pt);\
+    __asm__("lda #>%g",ptagain##name);\
+    __asm__("sta %v+1",pt);\
+ptagain##name##:\
+ptcount##name##:\
+    __asm__("lda #0");\
+    __asm__("inc %g+1",ptcount##name##);\
+    __asm__("cmp #%b",delay);\
+    __asm__("beq %g", ptdone##name##);\
+    __asm__("rts");\
+ptdone##name##:
+
+
+
 #endif
