@@ -233,9 +233,9 @@ void __fastcall__ irqhandler() {
 
 extern unsigned char lowres_image[];
 
-void idle200() {
+void idle10() {
   unsigned int a;
-  for(a=0;a<200;a++);
+  for(a=0;a<10;a++);
 }
 
 void show_lowres_image() {
@@ -257,20 +257,27 @@ void show_lowres_image() {
     ++k;
     *(unsigned char *)(0xD800+n) = lowres_image[k];
     ++k;
-    idle200();
+    idle10();
   }
 
-  for(;;);
+}
+
+void shake_screen() {
+  unsigned int i,j;
+
+  //for(j=0;j<20;j++)
+   for (i=0;i<150;i++) {
+    VIC.ctrl2=(VIC.ctrl2&0xF8)|(i&0x7);
+    VIC.ctrl1=(VIC.ctrl1&0xF8)|(i&0x7);
+    idle10();
+    }
 
 }
 
 void main(void) {
 
   show_lowres_image();
-  
-  show_image();
-  setup_sprites();
-
+  shake_screen();
 
   CIA1.icr = 0x7f;
   VIC.imr = 0;
@@ -280,6 +287,9 @@ void main(void) {
   *((unsigned char *)1) = 0x35;
   irq_set(irqhandler,0); 
   VIC.imr = 1;
+
+  show_image();
+  setup_sprites();
 
 
   loop:

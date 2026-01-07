@@ -17,14 +17,14 @@ lowres.o:
     ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
     NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
 main.o:
-    CODE              Offs=000000  Size=000770  Align=00001  Fill=0000
+    CODE              Offs=000000  Size=0007CB  Align=00001  Fill=0000
     RODATA            Offs=000000  Size=000018  Align=00001  Fill=0000
     BSS               Offs=000000  Size=000003  Align=00001  Fill=0000
     DATA              Offs=0007D0  Size=000034  Align=00001  Fill=0000
     ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
     NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
 snowflake.o:
-    CODE              Offs=000770  Size=000000  Align=00001  Fill=0000
+    CODE              Offs=0007CB  Size=000000  Align=00001  Fill=0000
     RODATA            Offs=000018  Size=000006  Align=00001  Fill=0000
     BSS               Offs=000003  Size=000000  Align=00001  Fill=0000
     DATA              Offs=000804  Size=000000  Align=00001  Fill=0000
@@ -32,28 +32,35 @@ snowflake.o:
     NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
     SPRITES           Offs=000000  Size=000100  Align=00001  Fill=0000
 D:\c64\cc65-snapshot-win32\lib/c64.lib(addeqsp.o):
-    CODE              Offs=000770  Size=000011  Align=00001  Fill=0000
+    CODE              Offs=0007CB  Size=000011  Align=00001  Fill=0000
+    RODATA            Offs=00001E  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=000003  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=000804  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+D:\c64\cc65-snapshot-win32\lib/c64.lib(addysp.o):
+    CODE              Offs=0007DC  Size=00000E  Align=00001  Fill=0000
     RODATA            Offs=00001E  Size=000000  Align=00001  Fill=0000
     BSS               Offs=000003  Size=000000  Align=00001  Fill=0000
     DATA              Offs=000804  Size=000000  Align=00001  Fill=0000
     ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
     NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
 D:\c64\cc65-snapshot-win32\lib/c64.lib(bneg.o):
-    CODE              Offs=000781  Size=00000E  Align=00001  Fill=0000
+    CODE              Offs=0007EA  Size=00000E  Align=00001  Fill=0000
     RODATA            Offs=00001E  Size=000000  Align=00001  Fill=0000
     BSS               Offs=000003  Size=000000  Align=00001  Fill=0000
     DATA              Offs=000804  Size=000000  Align=00001  Fill=0000
     ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
     NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
 D:\c64\cc65-snapshot-win32\lib/c64.lib(callmain.o):
-    CODE              Offs=00078F  Size=000017  Align=00001  Fill=0000
+    CODE              Offs=0007F8  Size=000017  Align=00001  Fill=0000
     RODATA            Offs=00001E  Size=000000  Align=00001  Fill=0000
     BSS               Offs=000003  Size=000000  Align=00001  Fill=0000
     DATA              Offs=000804  Size=000004  Align=00001  Fill=0000
     ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
     NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
 D:\c64\cc65-snapshot-win32\lib/c64.lib(condes.o):
-    CODE              Offs=0007A6  Size=00000C  Align=00001  Fill=0000
+    CODE              Offs=00080F  Size=00000C  Align=00001  Fill=0000
     RODATA            Offs=00001E  Size=000000  Align=00001  Fill=0000
     BSS               Offs=000003  Size=000000  Align=00001  Fill=0000
     DATA              Offs=000808  Size=000025  Align=00001  Fill=0000
@@ -61,7 +68,7 @@ D:\c64\cc65-snapshot-win32\lib/c64.lib(condes.o):
     NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
     ONCE              Offs=000000  Size=00000C  Align=00001  Fill=0000
 D:\c64\cc65-snapshot-win32\lib/c64.lib(crt0.o):
-    CODE              Offs=0007B2  Size=000000  Align=00001  Fill=0000
+    CODE              Offs=00081B  Size=000000  Align=00001  Fill=0000
     RODATA            Offs=00001E  Size=000000  Align=00001  Fill=0000
     BSS               Offs=000003  Size=000000  Align=00001  Fill=0000
     DATA              Offs=00082D  Size=000000  Align=00001  Fill=0000
@@ -71,21 +78,21 @@ D:\c64\cc65-snapshot-win32\lib/c64.lib(crt0.o):
     ONCE              Offs=00000C  Size=00001A  Align=00001  Fill=0000
     INIT              Offs=000000  Size=00001C  Align=00001  Fill=0000
 D:\c64\cc65-snapshot-win32\lib/c64.lib(decsp2.o):
-    CODE              Offs=0007B2  Size=00000D  Align=00001  Fill=0000
+    CODE              Offs=00081B  Size=00000D  Align=00001  Fill=0000
     RODATA            Offs=00001E  Size=000000  Align=00001  Fill=0000
     BSS               Offs=000003  Size=000000  Align=00001  Fill=0000
     DATA              Offs=00082D  Size=000000  Align=00001  Fill=0000
     ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
     NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
 D:\c64\cc65-snapshot-win32\lib/c64.lib(decsp4.o):
-    CODE              Offs=0007BF  Size=00000D  Align=00001  Fill=0000
+    CODE              Offs=000828  Size=00000D  Align=00001  Fill=0000
     RODATA            Offs=00001E  Size=000000  Align=00001  Fill=0000
     BSS               Offs=000003  Size=000000  Align=00001  Fill=0000
     DATA              Offs=00082D  Size=000000  Align=00001  Fill=0000
     ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
     NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
 D:\c64\cc65-snapshot-win32\lib/c64.lib(exehdr.o):
-    CODE              Offs=0007CC  Size=000000  Align=00001  Fill=0000
+    CODE              Offs=000835  Size=000000  Align=00001  Fill=0000
     RODATA            Offs=00001E  Size=000000  Align=00001  Fill=0000
     BSS               Offs=000003  Size=000000  Align=00001  Fill=0000
     DATA              Offs=00082D  Size=000000  Align=00001  Fill=0000
@@ -93,21 +100,28 @@ D:\c64\cc65-snapshot-win32\lib/c64.lib(exehdr.o):
     NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
     EXEHDR            Offs=000000  Size=00000C  Align=00001  Fill=0000
 D:\c64\cc65-snapshot-win32\lib/c64.lib(incsp2.o):
-    CODE              Offs=0007CC  Size=000016  Align=00001  Fill=0000
+    CODE              Offs=000835  Size=000016  Align=00001  Fill=0000
+    RODATA            Offs=00001E  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=000003  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=00082D  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+D:\c64\cc65-snapshot-win32\lib/c64.lib(incsp4.o):
+    CODE              Offs=00084B  Size=000005  Align=00001  Fill=0000
     RODATA            Offs=00001E  Size=000000  Align=00001  Fill=0000
     BSS               Offs=000003  Size=000000  Align=00001  Fill=0000
     DATA              Offs=00082D  Size=000000  Align=00001  Fill=0000
     ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
     NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
 D:\c64\cc65-snapshot-win32\lib/c64.lib(kernal.o):
-    CODE              Offs=0007E2  Size=000000  Align=00001  Fill=0000
+    CODE              Offs=000850  Size=000000  Align=00001  Fill=0000
     RODATA            Offs=00001E  Size=000000  Align=00001  Fill=0000
     BSS               Offs=000003  Size=000000  Align=00001  Fill=0000
     DATA              Offs=00082D  Size=000000  Align=00001  Fill=0000
     ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
     NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
 D:\c64\cc65-snapshot-win32\lib/c64.lib(loadaddr.o):
-    CODE              Offs=0007E2  Size=000000  Align=00001  Fill=0000
+    CODE              Offs=000850  Size=000000  Align=00001  Fill=0000
     RODATA            Offs=00001E  Size=000000  Align=00001  Fill=0000
     BSS               Offs=000003  Size=000000  Align=00001  Fill=0000
     DATA              Offs=00082D  Size=000000  Align=00001  Fill=0000
@@ -115,49 +129,56 @@ D:\c64\cc65-snapshot-win32\lib/c64.lib(loadaddr.o):
     NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
     LOADADDR          Offs=000000  Size=000002  Align=00001  Fill=0000
 D:\c64\cc65-snapshot-win32\lib/c64.lib(memcpy.o):
-    CODE              Offs=0007E2  Size=00003C  Align=00001  Fill=0000
+    CODE              Offs=000850  Size=00003C  Align=00001  Fill=0000
+    RODATA            Offs=00001E  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=000003  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=00082D  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+D:\c64\cc65-snapshot-win32\lib/c64.lib(or.o):
+    CODE              Offs=00088C  Size=000012  Align=00001  Fill=0000
     RODATA            Offs=00001E  Size=000000  Align=00001  Fill=0000
     BSS               Offs=000003  Size=000000  Align=00001  Fill=0000
     DATA              Offs=00082D  Size=000000  Align=00001  Fill=0000
     ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
     NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
 D:\c64\cc65-snapshot-win32\lib/c64.lib(popptr1.o):
-    CODE              Offs=00081E  Size=00000E  Align=00001  Fill=0000
+    CODE              Offs=00089E  Size=00000E  Align=00001  Fill=0000
     RODATA            Offs=00001E  Size=000000  Align=00001  Fill=0000
     BSS               Offs=000003  Size=000000  Align=00001  Fill=0000
     DATA              Offs=00082D  Size=000000  Align=00001  Fill=0000
     ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
     NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
 D:\c64\cc65-snapshot-win32\lib/c64.lib(pushax.o):
-    CODE              Offs=00082C  Size=00001A  Align=00001  Fill=0000
+    CODE              Offs=0008AC  Size=00001A  Align=00001  Fill=0000
     RODATA            Offs=00001E  Size=000000  Align=00001  Fill=0000
     BSS               Offs=000003  Size=000000  Align=00001  Fill=0000
     DATA              Offs=00082D  Size=000000  Align=00001  Fill=0000
     ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
     NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
 D:\c64\cc65-snapshot-win32\lib/c64.lib(shrax2.o):
-    CODE              Offs=000846  Size=00000B  Align=00001  Fill=0000
+    CODE              Offs=0008C6  Size=00000B  Align=00001  Fill=0000
     RODATA            Offs=00001E  Size=000000  Align=00001  Fill=0000
     BSS               Offs=000003  Size=000000  Align=00001  Fill=0000
     DATA              Offs=00082D  Size=000000  Align=00001  Fill=0000
     ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
     NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
 D:\c64\cc65-snapshot-win32\lib/c64.lib(shrax4.o):
-    CODE              Offs=000851  Size=000011  Align=00001  Fill=0000
+    CODE              Offs=0008D1  Size=000011  Align=00001  Fill=0000
     RODATA            Offs=00001E  Size=000000  Align=00001  Fill=0000
     BSS               Offs=000003  Size=000000  Align=00001  Fill=0000
     DATA              Offs=00082D  Size=000000  Align=00001  Fill=0000
     ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
     NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
 D:\c64\cc65-snapshot-win32\lib/c64.lib(zerobss.o):
-    CODE              Offs=000862  Size=000023  Align=00001  Fill=0000
+    CODE              Offs=0008E2  Size=000023  Align=00001  Fill=0000
     RODATA            Offs=00001E  Size=000000  Align=00001  Fill=0000
     BSS               Offs=000003  Size=000000  Align=00001  Fill=0000
     DATA              Offs=00082D  Size=000000  Align=00001  Fill=0000
     ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
     NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
 D:\c64\cc65-snapshot-win32\lib/c64.lib(zeropage.o):
-    CODE              Offs=000885  Size=000000  Align=00001  Fill=0000
+    CODE              Offs=000905  Size=000000  Align=00001  Fill=0000
     RODATA            Offs=00001E  Size=000000  Align=00001  Fill=0000
     BSS               Offs=000003  Size=000000  Align=00001  Fill=0000
     DATA              Offs=00082D  Size=000000  Align=00001  Fill=0000
@@ -174,12 +195,12 @@ ZEROPAGE              000002  00001B  00001A  00001
 LOADADDR              0007FF  000800  000002  00001
 EXEHDR                000801  00080C  00000C  00001
 STARTUP               00080D  00083F  000033  00001
-CODE                  000840  0010C4  000885  00001
-RODATA                0010C5  0010E2  00001E  00001
-DATA                  0010E3  00190F  00082D  00001
-INIT                  001910  00192B  00001C  00001
-BSS                   00192C  00192E  000003  00001
-ONCE                  00192C  001951  000026  00001
+CODE                  000840  001144  000905  00001
+RODATA                001145  001162  00001E  00001
+DATA                  001163  00198F  00082D  00001
+INIT                  001990  0019AB  00001C  00001
+BSS                   0019AC  0019AE  000003  00001
+ONCE                  0019AC  0019D1  000026  00001
 SPRITES               008000  0080FF  000100  00001
 COLORS                008400  0087EE  0003EF  00001
 BITMAP                00A000  00BF3F  001F40  00001
@@ -209,67 +230,70 @@ STOP                      00FFE1  LA    TALK                      00FFB4  LA
 TKSA                      00FF96  LA    UDTIM                     00FFEA  LA    
 UNLSN                     00FFAE  LA    UNTLK                     00FFAB  LA    
 UPDCRAMPTR                00EA24  LA    VECTOR                    00FF8D  LA    
-__BSS_LOAD__              00192C  LA    __BSS_RUN__               00192C RLA    
+__BSS_LOAD__              0019AC  LA    __BSS_RUN__               0019AC RLA    
 __BSS_SIZE__              000003 REA    __CONSTRUCTOR_COUNT__     000000 REA    
-__CONSTRUCTOR_TABLE__     001952 RLA    __DESTRUCTOR_COUNT__      000000 REA    
-__DESTRUCTOR_TABLE__      0010E3 RLA    __EXEHDR__                000001 REA    
+__CONSTRUCTOR_TABLE__     0019D2 RLA    __DESTRUCTOR_COUNT__      000000 REA    
+__DESTRUCTOR_TABLE__      001163 RLA    __EXEHDR__                000001 REA    
 __HEADER_FILEOFFS__       000002  EA    __HEADER_LAST__           00080D RLA    
 __HEADER_SIZE__           00000D  EA    __HEADER_START__          000801  LA    
 __HIMEM__                 00D000 REA    __LOADADDR__              000001 REA    
 __MAIN_FILEOFFS__         00000E  EA    __MAIN_LAST__             00BF40  LA    
 __MAIN_SIZE__             00C7F3 REA    __MAIN_START__            00080D RLA    
-__ONCE_LOAD__             00192C  LA    __ONCE_RUN__              00192C RLA    
+__ONCE_LOAD__             0019AC  LA    __ONCE_RUN__              0019AC RLA    
 __ONCE_SIZE__             000026  EA    __STACKSIZE__             000800 REA    
 __STARTUP__               000001 REA    __ZP_FILEOFFS__           000000  EA    
 __ZP_LAST__               00001C  LA    __ZP_SIZE__               00001A  EA    
-__ZP_START__              000002  LA    __argc                    0018E7  LA    
-__argv                    0018E9  LA    _animtimeout              0018E4  LA    
+__ZP_START__              000002  LA    __argc                    001967  LA    
+__argv                    001969  LA    _animtimeout              001964  LA    
 _cliffs_bitmap            00A000  LA    _cliffs_colors            008400 RLA    
-_exit                     000825  LA    _hexor                    0010CD  LA    
-_i                        00192C  LA    _idle200                  000E73  LA    
-_irqhandler               000DB6  LA    _j                        00192D  LA    
-_lowres_image             0010E3 RLA    _main                     000F78 RLA    
-_memcpy                   001022 RLA    _my_irq                   00087E  LA    
-_my_irq_2                 000840  LA    _n                        00192E  LA    
-_pt                       0018E5  LA    _ptloop                   000D7B  LA    
+_exit                     000825  LA    _hexor                    00114D  LA    
+_i                        0019AC  LA    _idle10                   000E73  LA    
+_irqhandler               000DB6  LA    _j                        0019AD  LA    
+_lowres_image             001163 RLA    _main                     000FD0 RLA    
+_memcpy                   001090 RLA    _my_irq                   00087E  LA    
+_my_irq_2                 000840  LA    _n                        0019AE  LA    
+_pt                       001965  LA    _ptloop                   000D7B  LA    
 _ptrunner                 000DB2  LA    _rot_anim                 000BBE  LA    
-_setup_sprites            000CDC  LA    _shiftleft                0010C5  LA    
-_show_image               000846  LA    _show_lowres_image        000E9A  LA    
-_snowflake                008000 RLA    _snowflake_col_background 0010E0  LA    
-_snowflake_col_multi1     0010E1  LA    _snowflake_col_multi2     0010E2  LA    
-_snowflake_size           0010DD  LA    _snowflake_sprite_count   0010DF  LA    
-_sprits                   0018B3  LA    _testirq                  000D6F  LA    
-_testirq2                 000D75  LA    addeq0sp                  000FB0 RLA    
-addeqysp                  000FB2 RLA    bnega                     000FC5 RLA    
-bnegax                    000FC1  LA    c_sp                      000002 RLZ    
-callmain                  000FCF RLA    condes                    0018EB  LA    
-decsp2                    000FF2 RLA    decsp4                    000FFF RLA    
-donelib                   000FE6 RLA    incsp2                    001014 RLA    
-initlib                   00192C RLA    memcpy_getparams          00104B  LA    
-memcpy_upwards            001025  LA    popax                     00100C RLA    
-popptr1                   00105E RLA    ptr1                      00000A RLZ    
+_setup_sprites            000CDC  LA    _shake_screen             000F7B  LA    
+_shiftleft                001145  LA    _show_image               000846  LA    
+_show_lowres_image        000E9A  LA    _snowflake                008000 RLA    
+_snowflake_col_background 001160  LA    _snowflake_col_multi1     001161  LA    
+_snowflake_col_multi2     001162  LA    _snowflake_size           00115D  LA    
+_snowflake_sprite_count   00115F  LA    _sprits                   001933  LA    
+_testirq                  000D6F  LA    _testirq2                 000D75  LA    
+addeq0sp                  00100B RLA    addeqysp                  00100D RLA    
+addysp                    00101D RLA    addysp1                   00101C RLA    
+bnega                     00102E RLA    bnegax                    00102A  LA    
+c_sp                      000002 RLZ    callmain                  001038 RLA    
+condes                    00196B  LA    decsp2                    00105B RLA    
+decsp4                    001068 RLA    donelib                   00104F RLA    
+incsp2                    00107D RLA    incsp4                    00108B RLA    
+initlib                   0019AC RLA    memcpy_getparams          0010B9  LA    
+memcpy_upwards            001093  LA    popax                     001075 RLA    
+popptr1                   0010DE RLA    ptr1                      00000A RLZ    
 ptr2                      00000C RLZ    ptr3                      00000E RLZ    
-ptr4                      000010  LZ    push0                     00106C  LA    
-pusha0                    00106E  LA    pushax                    001070 RLA    
+ptr4                      000010  LZ    push0                     0010EC  LA    
+pusha0                    0010EE RLA    pushax                    0010F0 RLA    
 regbank                   000016  LZ    regsave                   000006  LZ    
-shrax2                    001086 RLA    shrax4                    001091 RLA    
+shrax2                    001106 RLA    shrax4                    001111 RLA    
 sreg                      000004 RLZ    tmp1                      000012 RLZ    
 tmp2                      000013  LZ    tmp3                      000014  LZ    
-tmp4                      000015  LZ    zerobss                   0010A2 RLA    
+tmp4                      000015  LZ    tosora0                   0010CC RLA    
+tosorax                   0010CE  LA    zerobss                   001122 RLA    
 
 
 
 Exports list by value:
 ----------------------
-__ZP_FILEOFFS__           000000  EA    __CONSTRUCTOR_COUNT__     000000 REA    
-__DESTRUCTOR_COUNT__      000000 REA    __STARTUP__               000001 REA    
-__LOADADDR__              000001 REA    __EXEHDR__                000001 REA    
-__ZP_START__              000002  LA    __HEADER_FILEOFFS__       000002  EA    
-c_sp                      000002 RLZ    __BSS_SIZE__              000003 REA    
+__CONSTRUCTOR_COUNT__     000000 REA    __ZP_FILEOFFS__           000000  EA    
+__DESTRUCTOR_COUNT__      000000 REA    __LOADADDR__              000001 REA    
+__EXEHDR__                000001 REA    __STARTUP__               000001 REA    
+c_sp                      000002 RLZ    __HEADER_FILEOFFS__       000002  EA    
+__ZP_START__              000002  LA    __BSS_SIZE__              000003 REA    
 sreg                      000004 RLZ    regsave                   000006  LZ    
 ptr1                      00000A RLZ    ptr2                      00000C RLZ    
-__HEADER_SIZE__           00000D  EA    __MAIN_FILEOFFS__         00000E  EA    
-ptr3                      00000E RLZ    ptr4                      000010  LZ    
+__HEADER_SIZE__           00000D  EA    ptr3                      00000E RLZ    
+__MAIN_FILEOFFS__         00000E  EA    ptr4                      000010  LZ    
 tmp1                      000012 RLZ    tmp2                      000013  LZ    
 tmp3                      000014  LZ    tmp4                      000015  LZ    
 regbank                   000016  LZ    __ZP_SIZE__               00001A  EA    
@@ -281,30 +305,33 @@ _show_image               000846  LA    _my_irq                   00087E  LA
 _rot_anim                 000BBE  LA    _setup_sprites            000CDC  LA    
 _testirq                  000D6F  LA    _testirq2                 000D75  LA    
 _ptloop                   000D7B  LA    _ptrunner                 000DB2  LA    
-_irqhandler               000DB6  LA    _idle200                  000E73  LA    
-_show_lowres_image        000E9A  LA    _main                     000F78 RLA    
-addeq0sp                  000FB0 RLA    addeqysp                  000FB2 RLA    
-bnegax                    000FC1  LA    bnega                     000FC5 RLA    
-callmain                  000FCF RLA    donelib                   000FE6 RLA    
-decsp2                    000FF2 RLA    decsp4                    000FFF RLA    
-popax                     00100C RLA    incsp2                    001014 RLA    
-_memcpy                   001022 RLA    memcpy_upwards            001025  LA    
-memcpy_getparams          00104B  LA    popptr1                   00105E RLA    
-push0                     00106C  LA    pusha0                    00106E  LA    
-pushax                    001070 RLA    shrax2                    001086 RLA    
-shrax4                    001091 RLA    zerobss                   0010A2 RLA    
-_shiftleft                0010C5  LA    _hexor                    0010CD  LA    
-_snowflake_size           0010DD  LA    _snowflake_sprite_count   0010DF  LA    
-_snowflake_col_background 0010E0  LA    _snowflake_col_multi1     0010E1  LA    
-_snowflake_col_multi2     0010E2  LA    _lowres_image             0010E3 RLA    
-__DESTRUCTOR_TABLE__      0010E3 RLA    _sprits                   0018B3  LA    
-_animtimeout              0018E4  LA    _pt                       0018E5  LA    
-__argc                    0018E7  LA    __argv                    0018E9  LA    
-condes                    0018EB  LA    _i                        00192C  LA    
-initlib                   00192C RLA    __ONCE_RUN__              00192C RLA    
-__ONCE_LOAD__             00192C  LA    __BSS_RUN__               00192C RLA    
-__BSS_LOAD__              00192C  LA    _j                        00192D  LA    
-_n                        00192E  LA    __CONSTRUCTOR_TABLE__     001952 RLA    
+_irqhandler               000DB6  LA    _idle10                   000E73  LA    
+_show_lowres_image        000E9A  LA    _shake_screen             000F7B  LA    
+_main                     000FD0 RLA    addeq0sp                  00100B RLA    
+addeqysp                  00100D RLA    addysp1                   00101C RLA    
+addysp                    00101D RLA    bnegax                    00102A  LA    
+bnega                     00102E RLA    callmain                  001038 RLA    
+donelib                   00104F RLA    decsp2                    00105B RLA    
+decsp4                    001068 RLA    popax                     001075 RLA    
+incsp2                    00107D RLA    incsp4                    00108B RLA    
+_memcpy                   001090 RLA    memcpy_upwards            001093  LA    
+memcpy_getparams          0010B9  LA    tosora0                   0010CC RLA    
+tosorax                   0010CE  LA    popptr1                   0010DE RLA    
+push0                     0010EC  LA    pusha0                    0010EE RLA    
+pushax                    0010F0 RLA    shrax2                    001106 RLA    
+shrax4                    001111 RLA    zerobss                   001122 RLA    
+_shiftleft                001145  LA    _hexor                    00114D  LA    
+_snowflake_size           00115D  LA    _snowflake_sprite_count   00115F  LA    
+_snowflake_col_background 001160  LA    _snowflake_col_multi1     001161  LA    
+_snowflake_col_multi2     001162  LA    _lowres_image             001163 RLA    
+__DESTRUCTOR_TABLE__      001163 RLA    _sprits                   001933  LA    
+_animtimeout              001964  LA    _pt                       001965  LA    
+__argc                    001967  LA    __argv                    001969  LA    
+condes                    00196B  LA    initlib                   0019AC RLA    
+__BSS_RUN__               0019AC RLA    __BSS_LOAD__              0019AC  LA    
+__ONCE_RUN__              0019AC RLA    __ONCE_LOAD__             0019AC  LA    
+_i                        0019AC  LA    _j                        0019AD  LA    
+_n                        0019AE  LA    __CONSTRUCTOR_TABLE__     0019D2 RLA    
 _snowflake                008000 RLA    _cliffs_colors            008400 RLA    
 _cliffs_bitmap            00A000  LA    __MAIN_LAST__             00BF40  LA    
 __MAIN_SIZE__             00C7F3 REA    __HIMEM__                 00D000 REA    
@@ -323,7 +350,7 @@ READST                    00FFB7  LA    SETLFS                    00FFBA  LA
 SETNAM                    00FFBD  LA    OPEN                      00FFC0  LA    
 CLOSE                     00FFC3  LA    CHKIN                     00FFC6  LA    
 CKOUT                     00FFC9  LA    CLRCH                     00FFCC  LA    
-CHRIN                     00FFCF  LA    BASIN                     00FFCF  LA    
+BASIN                     00FFCF  LA    CHRIN                     00FFCF  LA    
 BSOUT                     00FFD2 RLA    CHROUT                    00FFD2  LA    
 LOAD                      00FFD5  LA    SAVE                      00FFD8  LA    
 SETTIM                    00FFDB  LA    RDTIM                     00FFDE  LA    
@@ -434,7 +461,7 @@ _cliffs_colors (snowy.o):
 _exit (crt0.o):
 _hexor (main.o):
 _i (main.o):
-_idle200 (main.o):
+_idle10 (main.o):
 _irqhandler (main.o):
 _j (main.o):
 _lowres_image (lowres.o):
@@ -451,6 +478,7 @@ _ptloop (main.o):
 _ptrunner (main.o):
 _rot_anim (main.o):
 _setup_sprites (main.o):
+_shake_screen (main.o):
 _shiftleft (main.o):
 _show_image (main.o):
 _show_lowres_image (main.o):
@@ -465,16 +493,23 @@ _sprits (main.o):
 _testirq (main.o):
 _testirq2 (main.o):
 addeq0sp (addeqsp.o):
-    main.o                    d:\c64\vscode\borderoff\build\src\main.s:1316
-    main.o                    d:\c64\vscode\borderoff\build\src\main.s:1316
+    main.o                    d:\c64\vscode\borderoff\build\src\main.s:1382
+    main.o                    d:\c64\vscode\borderoff\build\src\main.s:1382
 addeqysp (addeqsp.o):
-    main.o                    d:\c64\vscode\borderoff\build\src\main.s:1316
+    main.o                    d:\c64\vscode\borderoff\build\src\main.s:1382
+    main.o                    d:\c64\vscode\borderoff\build\src\main.s:1382
+addysp (addysp.o):
+    incsp4.o                  runtime/incsp4.s:8
+addysp1 (addysp.o):
+    or.o                      runtime/or.s:9
 bnega (bneg.o):
-    main.o                    d:\c64\vscode\borderoff\build\src\main.s:1316
+    main.o                    d:\c64\vscode\borderoff\build\src\main.s:1382
 bnegax (bneg.o):
 c_sp (zeropage.o):
+    addysp.o                  runtime/addysp.s:8
     pushax.o                  runtime/pushax.s:8
     popptr1.o                 runtime/popptr1.s:9
+    or.o                      runtime/or.s:10
     memcpy.o                  common/memcpy.s:15
     incsp2.o                  runtime/incsp2.s:8
     decsp4.o                  runtime/decsp4.s:8
@@ -486,14 +521,18 @@ callmain (callmain.o):
     crt0.o                    c64/crt0.s:9
 condes (condes.o):
 decsp2 (decsp2.o):
-    main.o                    d:\c64\vscode\borderoff\build\src\main.s:1316
+    main.o                    d:\c64\vscode\borderoff\build\src\main.s:1382
 decsp4 (decsp4.o):
-    main.o                    d:\c64\vscode\borderoff\build\src\main.s:1316
+    main.o                    d:\c64\vscode\borderoff\build\src\main.s:1382
+    main.o                    d:\c64\vscode\borderoff\build\src\main.s:1382
 donelib (condes.o):
     crt0.o                    c64/crt0.s:8
 incsp2 (incsp2.o):
     popptr1.o                 runtime/popptr1.s:8
-    main.o                    d:\c64\vscode\borderoff\build\src\main.s:1316
+    main.o                    d:\c64\vscode\borderoff\build\src\main.s:1382
+incsp4 (incsp4.o):
+    main.o                    d:\c64\vscode\borderoff\build\src\main.s:1382
+    main.o                    d:\c64\vscode\borderoff\build\src\main.s:1382
 initlib (condes.o):
     crt0.o                    c64/crt0.s:8
 memcpy_getparams (memcpy.o):
@@ -514,25 +553,30 @@ ptr3 (zeropage.o):
 ptr4 (zeropage.o):
 push0 (pushax.o):
 pusha0 (pushax.o):
+    main.o                    d:\c64\vscode\borderoff\build\src\main.s:1382
 pushax (pushax.o):
     callmain.o                runtime/callmain.s:11
-    main.o                    d:\c64\vscode\borderoff\build\src\main.s:1316
+    main.o                    d:\c64\vscode\borderoff\build\src\main.s:1382
 regbank (zeropage.o):
 regsave (zeropage.o):
 shrax2 (shrax2.o):
-    main.o                    d:\c64\vscode\borderoff\build\src\main.s:1316
-    main.o                    d:\c64\vscode\borderoff\build\src\main.s:1316
+    main.o                    d:\c64\vscode\borderoff\build\src\main.s:1382
+    main.o                    d:\c64\vscode\borderoff\build\src\main.s:1382
 shrax4 (shrax4.o):
-    main.o                    d:\c64\vscode\borderoff\build\src\main.s:1316
-    main.o                    d:\c64\vscode\borderoff\build\src\main.s:1316
+    main.o                    d:\c64\vscode\borderoff\build\src\main.s:1382
+    main.o                    d:\c64\vscode\borderoff\build\src\main.s:1382
 sreg (zeropage.o):
     main.o                    d:\c64\vscode\borderoff\build\src\main.s:10
 tmp1 (zeropage.o):
     shrax4.o                  runtime/shrax4.s:8
     shrax2.o                  runtime/shrax2.s:8
+    or.o                      runtime/or.s:10
 tmp2 (zeropage.o):
 tmp3 (zeropage.o):
 tmp4 (zeropage.o):
+tosora0 (or.o):
+    main.o                    d:\c64\vscode\borderoff\build\src\main.s:1382
+tosorax (or.o):
 zerobss (zerobss.o):
     crt0.o                    c64/crt0.s:9
 
