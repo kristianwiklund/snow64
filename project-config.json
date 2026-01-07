@@ -4,8 +4,9 @@
     "toolkit": "cc65",
     "sources": [
         "src/main.c",
-        "src/snowflake.spm",
-        "src/snowy.s"
+        "src/snowflake.c",
+        "src/snowy.s",
+        "src/lowres.s"
     ],
     "build": "debug",
     "definitions": [],

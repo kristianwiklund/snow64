@@ -476,7 +476,7 @@ _cliffs_bitmap:
 	.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
 
 ; Colors
-.segment "DATA"
+.segment "COLORS"
 .export _cliffs_colors
 _cliffs_colors:
 	.byte $00,$C0,$00,$00,$00,$00,$00,$00,$C0,$00,$00,$00,$00,$00,$00,$00,$00

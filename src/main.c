@@ -55,7 +55,11 @@ extern unsigned char cliffs_colors[];
 extern unsigned char *_BITMAP_LOAD__,*_BITMAP_RUN__,*_COLORS_LOAD__,*_COLORS_RUN__;
 extern unsigned int _BITMAP_SIZE__, _COLORS_SIZE__;
 
+extern unsigned char snowflake[];
 
+#define VIC_BANK_START 0x8000
+#define SPRITEPTR (((unsigned int)snowflake)/64)
+#define SPRITE_POINTERS (VIC_BANK_START+2040)
 
 void show_image() {   
   // https://www.c64-wiki.com/wiki/Standard_Bitmap_Mode
@@ -68,7 +72,13 @@ void show_image() {
   memcpy(P_COLOR, cliffs_colors, 0x400);
   //memset(P_COLOR,0x11,0x400);
   VIC.ctrl1 = 0b00111000;
+
+  // set up screen memory
   VIC.addr  = 0b00011000;
+  // point at 0x8000
+  CIA2.pra &=0xfc;
+  CIA2.pra |=0x1;
+
 
 
   // set the ghostbyte
@@ -123,22 +133,35 @@ void my_irq_2(void) {
 
 }
 
+unsigned char animtimeout=0;
 
-extern unsigned char snowflake[];
-#define smem 832;
+#define ROT_SPRITE(sprite)\
+    VIC.bordercolor=COLOR_BLUE;\
+      sprits.anim[sprite]=(sprits.anim[sprite]+1)&3;\
+      *(unsigned char *)(SPRITE_POINTERS+sprite) = SPRITEPTR+sprits.anim[sprite];
+
+void rot_anim() {
+  if (++animtimeout&0x40) {
+    animtimeout=0;
+    ROT_SPRITE(0);
+    ROT_SPRITE(1);
+    ROT_SPRITE(2);
+    ROT_SPRITE(3);
+    ROT_SPRITE(4);
+    ROT_SPRITE(5);
+    ROT_SPRITE(6);
+    ROT_SPRITE(7);
+    VIC.bordercolor=COLOR_BLACK;
+  } 
+}
 
 void setup_sprites() {
 
   VIC.spr_ena=0x1F;
-  // VIC.spr1_y=100;
-  // VIC.spr1_x=255;
-  // VIC.spr2_y=160;
-  // VIC.spr2_x=0;
-  // sprits.hisprites=0x04;
 
   for (i=0;i<8;i++) {
-    *(unsigned char *)(2040+i) = 13+sprits.anim[i];
-    VIC.spr_color[i] = COLOR_WHITE;
+    *(unsigned char *)(SPRITE_POINTERS+i) = SPRITEPTR+sprits.anim[i];
+    VIC.spr_color[i] = COLOR_GRAY3;
   } 
   VIC.spr_hi_x=0;
   for(i=0;i<8;i++){
@@ -146,16 +169,8 @@ void setup_sprites() {
     VIC.spr_pos[i].y=sprits.y[i];
   }
 
-  // https://www.commodore.ca/manuals/c64_users_guide/c64-users_guide-06-sprite_graphics.pdf
-
-
-for (n = 0 ; n < 64+64+64; n++) {
- 		POKE(832+n,snowflake[n]);
-
-    }
-   // printf("%u\n",&VIC.spr_coll);
-
 }
+
 void testirq() {
   VIC.bordercolor=COLOR_BLACK;
 }
@@ -175,19 +190,25 @@ void ptrunner() {
 }
 
 void ptloop() {
-  pt_wait(bordercolor,pt,2*50);
-  VIC.bordercolor=COLOR_ORANGE;
+    pt_wait(bordercolor_orange_1,pt,2*50);
+    VIC.bordercolor=COLOR_ORANGE;
+    pt_wait(bordercolor_orange_2,pt,2*50);
+    VIC.bordercolor=COLOR_BLACK;
+
 }
 #pragma optimize (pop)
 
 void __fastcall__ irqhandler() {  
 
   irq_save();
-
   // set ghostbyte to transparent and put sprites in top of graphics. 
-  POKE(0x3FFF,0x0);
+  POKE(VIC_BANK_START+0x3FFF,0x0);
   VIC.spr_bg_prio=0x0;
+
+
   ptrunner();
+  rot_anim();
+
 
   // irq_wait(48);
   // // turn on graphics mode
@@ -195,7 +216,7 @@ void __fastcall__ irqhandler() {
 
   irq_wait(247);
   // set ghostbyte to solid black and put sprites behind graphics
-  POKE(0x3fff,0xff);
+  POKE(VIC_BANK_START+0x3FFF,0xff);
   VIC.spr_bg_prio=0xFF;
 
 
@@ -209,8 +230,44 @@ void __fastcall__ irqhandler() {
   irq_restore();
 
 }
+
+extern unsigned char lowres_image[];
+
+void idle200() {
+  unsigned int a;
+  for(a=0;a<200;a++);
+}
+
+void show_lowres_image() {
+  unsigned int n,k;
+// start with the lowres image
+
+  for(n=0;n<1000;n++) {
+    *(unsigned char *)(0x400+n) = 0;
+    *(unsigned char *)(0xD800+n) = COLOR_WHITE;
+  }
+
+  
+  VIC.bgcolor0=COLOR_BLACK;
+  VIC.bordercolor=COLOR_BLACK;
+
+  k=0;
+  for(n=0;n<1000;n++) {
+    *(unsigned char *)(0x400+n) = lowres_image[k];
+    ++k;
+    *(unsigned char *)(0xD800+n) = lowres_image[k];
+    ++k;
+    idle200();
+  }
+
+  for(;;);
+
+}
+
 void main(void) {
 
+  show_lowres_image();
+  
   show_image();
   setup_sprites();
 
