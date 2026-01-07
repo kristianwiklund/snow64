@@ -221,9 +221,9 @@ void __fastcall__ irqhandler() {
 
 extern unsigned char lowres_image[];
 
-void idle10() {
+void idle50() {
   unsigned int a;
-  for(a=0;a<10;a++);
+  for(a=0;a<50;a++);
 }
 
 void show_lowres_image() {
@@ -245,7 +245,7 @@ void show_lowres_image() {
     ++k;
     *(unsigned char *)(0xD800+n) = lowres_image[k];
     ++k;
-    idle10();
+    idle50();
   }
 
 }
@@ -257,7 +257,7 @@ void shake_screen() {
    for (i=0;i<150;i++) {
     VIC.ctrl2=(VIC.ctrl2&0xF8)|(i&0x7);
     VIC.ctrl1=(VIC.ctrl1&0xF8)|(i&0x7);
-    idle10();
+    idle50();
     }
 
 }
@@ -270,25 +270,26 @@ void slide_into_hires() {
   // go to hires
   show_image();
   VIC.bordercolor=COLOR_BLACK;
+  VIC.spr_ena=0xFF;
+  my_irq();
 
   // go to lowres
   irq_wait(tehline);
+  VIC.spr_ena=0x0;
+
+  // restore lowres settings
+  VIC.ctrl1 = 0x1c;
+  VIC.addr  = 0b00010101;
+  CIA2.pra = 0x97;
 
   if (tehline>253) {
-    setup_sprites();
     irq_set(irqhandler,0);
+    show_image();
+    VIC.spr_ena=0xFF;
     irq_restore();
   }
 
-  // restore lowres settings
-  VIC.ctrl1 = 0x1b;
-
-  VIC.addr  = 0b00010101;
-
-  CIA2.pra = 0x97;
-
-  tehline++;
-  VIC.bordercolor=COLOR_BLUE;
+  tehline+=2;
   irq_set(slide_into_hires, 0);
   irq_restore();
 }
@@ -296,12 +297,17 @@ void slide_into_hires() {
 void main(void) {
   unsigned char a,b;
 
+  POKE(198,0);
+  while(!PEEK(198));
+
+
   printf("%x %x %x ",CIA2.pra, VIC.ctrl1, VIC.addr);
 
   show_lowres_image();
   a=VIC.ctrl1;
   b=VIC.ctrl2;
   shake_screen();
+  setup_sprites();
 
   CIA1.icr = 0x7f; // turn off cia interrupts
   VIC.imr = 0;     // turn off vic interrupts
@@ -317,7 +323,6 @@ void main(void) {
 
   //show_image();
   //setup_sprites();
-
 
   loop:
     goto loop;
