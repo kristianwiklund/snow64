@@ -60,29 +60,21 @@ extern unsigned char snowflake[];
 #define VIC_BANK_START 0x8000
 #define SPRITEPTR (((unsigned int)snowflake)/64)
 #define SPRITE_POINTERS (VIC_BANK_START+2040)
+#define P_SCREEN ((unsigned char *)0x2000)
+#define P_COLOR  ((unsigned char *)0x0400)
 
 void show_image() {   
-  // https://www.c64-wiki.com/wiki/Standard_Bitmap_Mode
-
-  #define P_SCREEN ((unsigned char *)0x2000)
-  #define P_COLOR  ((unsigned char *)0x0400)
-
-  //printf("sb=%x, ss=%x, cb=%x, cc=%x\n", cliffs_bitmap, P_SCREEN, cliffs_colors, P_COLOR);
-
-  memcpy(P_COLOR, cliffs_colors, 0x400);
-  //memset(P_COLOR,0x11,0x400);
+ 
+  // //memset(P_COLOR,0x11,0x400);
   VIC.ctrl1 = 0b00111000;
-
-  // set up screen memory
+  // // set up screen memory
   VIC.addr  = 0b00011000;
-  // point at 0x8000
+  // // point at 0x8000
   CIA2.pra &=0xfc;
   CIA2.pra |=0x1;
 
-
-
   // set the ghostbyte
-  POKE(0x3fff,0x0);
+  //POKE(0x3fff,0x0);
   VIC.bgcolor0 = COLOR_BLACK;
   VIC.bordercolor = COLOR_BLACK;
 }
@@ -190,10 +182,6 @@ void ptrunner() {
 }
 
 void ptloop() {
-    pt_wait(bordercolor_orange_1,pt,2*50);
-    VIC.bordercolor=COLOR_ORANGE;
-    pt_wait(bordercolor_orange_2,pt,2*50);
-    VIC.bordercolor=COLOR_BLACK;
 
 }
 #pragma optimize (pop)
@@ -274,22 +262,61 @@ void shake_screen() {
 
 }
 
+// moves the screen downwards, exposing the hires image gradually, before we move to the snowy landscape
+void slide_into_hires() {
+  static int tehline=51;
+  irq_save();
+  
+  // go to hires
+  show_image();
+  VIC.bordercolor=COLOR_BLACK;
+
+  // go to lowres
+  irq_wait(tehline);
+
+  if (tehline>253) {
+    setup_sprites();
+    irq_set(irqhandler,0);
+    irq_restore();
+  }
+
+  // restore lowres settings
+  VIC.ctrl1 = 0x1b;
+
+  VIC.addr  = 0b00010101;
+
+  CIA2.pra = 0x97;
+
+  tehline++;
+  VIC.bordercolor=COLOR_BLUE;
+  irq_set(slide_into_hires, 0);
+  irq_restore();
+}
+
 void main(void) {
+  unsigned char a,b;
+
+  printf("%x %x %x ",CIA2.pra, VIC.ctrl1, VIC.addr);
 
   show_lowres_image();
+  a=VIC.ctrl1;
+  b=VIC.ctrl2;
   shake_screen();
 
-  CIA1.icr = 0x7f;
-  VIC.imr = 0;
-  VIC.ctrl1 = 0x1b;
+  CIA1.icr = 0x7f; // turn off cia interrupts
+  VIC.imr = 0;     // turn off vic interrupts
+  VIC.ctrl1 = a;  
+  VIC.ctrl2 = b;
+
   /* enable raster  IRQs */
   // disable KERNEL and BASIC roms, keep I/O enabled
-  *((unsigned char *)1) = 0x35;
-  irq_set(irqhandler,0); 
-  VIC.imr = 1;
+  *((unsigned char *)1) = 0x35; // 0b00111001
 
-  show_image();
-  setup_sprites();
+  irq_set(slide_into_hires,0); 
+  VIC.imr = 1;  // enable vic interrupts
+
+  //show_image();
+  //setup_sprites();
 
 
   loop:

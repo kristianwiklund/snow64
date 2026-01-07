@@ -6,8 +6,7 @@
         "src/main.c",
         "src/snowflake.c",
         "src/snowy.s",
-        "src/lowres.s"
-    ],
+        "src/lowres.s" ],
     "build": "debug",
     "definitions": [],
     "includes": [],
